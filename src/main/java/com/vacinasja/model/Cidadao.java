@@ -56,4 +56,8 @@ public class Cidadao {
         this.profissao = profissao;
         this.cormobidade = cormobidade;
     }
+
+    public String getCpf() {
+        return cpf;
+    }
 }

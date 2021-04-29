@@ -11,27 +11,24 @@ public class LoginCidadao {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    private String login;
-    private String password;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "login_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Login login;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cidadao_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Cidadao cidadao;
 
-    public LoginCidadao(String login, String password, Cidadao cidadao) {
+    public LoginCidadao(Login login, Cidadao cidadao) {
         this.login = login;
-        this.password = password;
         this.cidadao = cidadao;
     }
 
     public LoginCidadao() {}
 
-    public String getLogin() {
+    public Login getLogin() {
         return login;
-    }
-
-    public String getPassword() {
-        return password;
     }
 }

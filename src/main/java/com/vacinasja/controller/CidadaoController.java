@@ -1,6 +1,7 @@
 package com.vacinasja.controller;
 
 import com.vacinasja.dto.cidadao.InsertCidadaoDto;
+import com.vacinasja.error.tipo_login_error.TipoLoginInvalido;
 import com.vacinasja.model.LoginCidadao;
 import com.vacinasja.service.cidadao_service.CidadaoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class CidadaoController {
     CidadaoService cidadaoService;
 
     @PostMapping("/")
-    public ResponseEntity<LoginCidadao> save(@RequestBody InsertCidadaoDto insertCidadaoDto) throws ParseException {
+    public ResponseEntity<LoginCidadao> save(@RequestBody InsertCidadaoDto insertCidadaoDto) throws ParseException, TipoLoginInvalido {
         LoginCidadao loginCidadao = cidadaoService.save(insertCidadaoDto);
 
         return new ResponseEntity<>(loginCidadao, HttpStatus.OK);
