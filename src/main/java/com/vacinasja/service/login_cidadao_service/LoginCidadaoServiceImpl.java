@@ -25,4 +25,6 @@ public class LoginCidadaoServiceImpl implements LoginCidadaoService {
         loginCidadaoRepository.save(novoLoginCidadao);
         return novoLoginCidadao;
     }
+
+
 }

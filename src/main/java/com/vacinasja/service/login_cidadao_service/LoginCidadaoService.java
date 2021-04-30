@@ -6,4 +6,5 @@ import com.vacinasja.model.LoginCidadao;
 
 public interface LoginCidadaoService {
     LoginCidadao criarLoginCidadao(Cidadao cidadao) throws TipoLoginInvalido;
+
 }
