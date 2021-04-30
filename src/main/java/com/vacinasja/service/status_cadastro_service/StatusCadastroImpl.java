@@ -4,9 +4,11 @@ import com.vacinasja.error.status_cadastro_error.StatusInvalido;
 import com.vacinasja.model.StatusCadastro;
 import com.vacinasja.repository.StatusCadastroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class StatusCadastroImpl implements StatusCadastroService {
 
     @Autowired

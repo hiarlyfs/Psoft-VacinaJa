@@ -7,5 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface LoginRepository extends JpaRepository<Login, Long> {
-    Optional<Login> findByLoginAndPasswordAndTipoLogin(String login, String password, TipoLogin tipoLogin);
+    Optional<Login> findByLoginAndPassword(String login, String password);
+    Optional<Login> findByLogin(String login);
 }

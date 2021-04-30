@@ -31,4 +31,8 @@ public class Login {
     public String getPassword() {
         return password;
     }
+
+    public TipoLogin getTipoLogin() {
+        return tipoLogin;
+    }
 }

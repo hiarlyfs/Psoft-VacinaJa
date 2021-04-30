@@ -2,7 +2,6 @@ package com.vacinasja.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -24,16 +23,11 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
                 // filtra outras requisições para verificar a presença do JWT no header
-                .addFilterBefore(new JWTAuthenticationFilter(),
+                .addFilterBefore(tokenAuthrozationFilter(),
                         UsernamePasswordAuthenticationFilter.class);
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // cria uma conta default
-        auth.inMemoryAuthentication()
-                .withUser("admin")
-                .password("password")
-                .roles("ADMIN");
+    private JWTAuthenticationFilter tokenAuthrozationFilter() throws Exception {
+        return new JWTAuthenticationFilter(authenticationManager(), getApplicationContext());
     }
 }

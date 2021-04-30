@@ -30,15 +30,20 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public Login findLoginAndPasswordAndTipoLogin(String login, String password, String tipoLogin) throws TipoLoginInvalido, LoginInvalido {
-        TipoLogin tipoLoginBuscado = tipoLoginService.findByTipoLogin(tipoLogin);
-        Optional<Login> loginEncontrado = loginRepository.findByLoginAndPasswordAndTipoLogin(login, password, tipoLoginBuscado);
+    public Login login(String login, String password) throws LoginInvalido {
+        Optional<Login> loginEncontrado = loginRepository.findByLoginAndPassword(login, password);
 
         if (!loginEncontrado.isPresent()) {
             throw new LoginInvalido();
         }
 
         return loginEncontrado.get();
+    }
+
+    @Override
+    public Login findByUserLogin(String login) {
+        Optional<Login> loginEncontrado = loginRepository.findByLogin(login);
+        return loginEncontrado.orElse(null);
     }
 
 
