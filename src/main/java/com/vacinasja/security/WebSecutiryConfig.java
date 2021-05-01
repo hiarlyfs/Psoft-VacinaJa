@@ -2,6 +2,7 @@ package com.vacinasja.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -9,6 +10,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
@@ -28,6 +30,6 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private JWTAuthenticationFilter tokenAuthrozationFilter() throws Exception {
-        return new JWTAuthenticationFilter(authenticationManager(), getApplicationContext());
+        return new JWTAuthenticationFilter(getApplicationContext());
     }
 }

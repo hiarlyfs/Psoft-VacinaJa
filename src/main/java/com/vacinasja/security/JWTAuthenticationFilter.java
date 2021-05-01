@@ -22,11 +22,9 @@ import java.io.IOException;
 
 public class JWTAuthenticationFilter extends GenericFilterBean {
 
-    private final AuthenticationManager authenticationManager;
     private final TokenAuthenticateService tokenAuthenticateService;
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, ApplicationContext ctx) {
-        this.authenticationManager = authenticationManager;
+    public JWTAuthenticationFilter(ApplicationContext ctx) {
         this.tokenAuthenticateService = ctx.getBean(TokenAuthenticateService.class);
     }
 

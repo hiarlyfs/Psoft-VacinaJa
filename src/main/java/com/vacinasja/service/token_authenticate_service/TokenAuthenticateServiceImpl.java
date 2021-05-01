@@ -2,27 +2,30 @@ package com.vacinasja.service.token_authenticate_service;
 
 import com.vacinasja.model.Login;
 import com.vacinasja.service.login_service.LoginService;
-import com.vacinasja.service.login_service.LoginServiceImpl;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class TokenAuthenticateServiceImpl implements TokenAuthenticateService {
+
+    @Autowired
+    LoginService loginService;
+
     static final long EXPIRATION_TIME = 86_400_000;
     static final String SECRET = "16bd8dfba2191761b65d5a795806e530";
     static final String TOKEN_PREFIX = "Bearer";
     static final String HEADER_STRING = "Authorization";
-
-    @Autowired
-    LoginService loginService;
 
     @Override
     public String createToken(String login) {
@@ -49,7 +52,9 @@ public class TokenAuthenticateServiceImpl implements TokenAuthenticateService {
                 Login userLogin = loginService.findByUserLogin(login);
 
                 if (userLogin != null) {
-                    return new UsernamePasswordAuthenticationToken(userLogin.getLogin(), null, Collections.emptyList());
+                    List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+                    authorities.add(new SimpleGrantedAuthority("ROLE_" + userLogin.getTipoLogin()));
+                    return new UsernamePasswordAuthenticationToken(userLogin.getLogin(), "", authorities);
                 }
             }
 

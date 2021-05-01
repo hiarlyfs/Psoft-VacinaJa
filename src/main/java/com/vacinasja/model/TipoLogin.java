@@ -15,4 +15,8 @@ public class TipoLogin {
 
     public TipoLogin() {
     }
+
+    public String getTipoLogin() {
+        return tipoLogin;
+    }
 }

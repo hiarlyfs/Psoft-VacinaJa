@@ -32,7 +32,7 @@ public class Login {
         return password;
     }
 
-    public TipoLogin getTipoLogin() {
-        return tipoLogin;
+    public String getTipoLogin() {
+        return tipoLogin.getTipoLogin();
     }
 }

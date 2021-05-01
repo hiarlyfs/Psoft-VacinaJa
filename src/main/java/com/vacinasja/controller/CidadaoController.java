@@ -21,7 +21,6 @@ public class CidadaoController {
     CidadaoService cidadaoService;
 
     @PostMapping("/")
-    @PreAuthorize("")
     public ResponseEntity<LoginCidadao> save(@RequestBody InsertCidadaoDto insertCidadaoDto) throws ParseException, TipoLoginInvalido {
         LoginCidadao loginCidadao = cidadaoService.save(insertCidadaoDto);
 
