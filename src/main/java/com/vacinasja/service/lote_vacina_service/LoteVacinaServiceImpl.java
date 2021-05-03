@@ -29,7 +29,6 @@ public class LoteVacinaServiceImpl implements LoteVacinaService{
 	@Override
 	public LoteVacina cadastrarLoteVacina(InsertLoteVacinaDto loteVacinaDto) throws ParseException, VacinaInexistente{
 		Date dataValidade = new SimpleDateFormat("yyyy-MM-dd").parse(loteVacinaDto.getDataValidade());
-		
 		Optional<Vacina> vacina = vacinaRepository.findById(loteVacinaDto.getVacinaId());
 		if (!vacina.isPresent()) {
 			throw new VacinaInexistente(loteVacinaDto.getVacinaId());
