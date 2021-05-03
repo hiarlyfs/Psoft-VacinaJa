@@ -4,22 +4,22 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class InsertLoteVacinaDto {
 	
-    private Long vacina_id;
+    private Long vacinaId;
     
 	private Integer qtdDoses;
 	
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private String dataValidade;
 
-	public InsertLoteVacinaDto(String dataValidade, Integer qtdDoses, Long vacina_id) {
+	public InsertLoteVacinaDto(String dataValidade, Integer qtdDoses, Long vacinaId) {
 		super();
 		this.dataValidade = dataValidade;
 		this.qtdDoses = qtdDoses;
-		this.vacina_id = vacina_id;
+		this.vacinaId = vacinaId;
 	}
 	
 	public Long getVacinaId() {
-		return vacina_id;
+		return vacinaId;
 	}
 	
 	public Integer getQtdDoses() {
