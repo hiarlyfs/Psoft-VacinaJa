@@ -30,7 +30,7 @@ public class LoteVacinaController {
 	
     @PostMapping("")
     public ResponseEntity<LoteVacina> criarLoteVacina(@RequestBody InsertLoteVacinaDto loteVacinaDto) throws ParseException, VacinaInexistente {
-        LoteVacina novoLoteVacina = loteVacinaService.cadastrarLoteVacina(loteVacinaDto);
+    	LoteVacina novoLoteVacina = loteVacinaService.cadastrarLoteVacina(loteVacinaDto);
         return new ResponseEntity<LoteVacina>(novoLoteVacina, HttpStatus.CREATED);
     }
     
