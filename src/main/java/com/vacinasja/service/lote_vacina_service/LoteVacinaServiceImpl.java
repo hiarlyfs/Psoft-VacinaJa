@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vacinasja.dto.lote_vacina.LoteVacinaDto;
+import com.vacinasja.error.lotevacina_error.LoteVacinaInexistente;
 import com.vacinasja.error.vacina_error.VacinaInexistente;
 import com.vacinasja.model.LoteVacina;
 import com.vacinasja.model.Vacina;
@@ -42,6 +43,13 @@ public class LoteVacinaServiceImpl implements LoteVacinaService{
 	@Override
 	public List<LoteVacina> allLotesVacina() {
 		return loteVacinaRepository.findAll();
+	}
+
+	@Override
+	public LoteVacina getLoteVacinaById(Long id) throws LoteVacinaInexistente {
+		Optional<LoteVacina> loteVacinaEncontrado = loteVacinaRepository.findById(id);
+		if (!loteVacinaEncontrado.isPresent()) throw new LoteVacinaInexistente(id);
+		return loteVacinaEncontrado.get();
 	}
 
 
