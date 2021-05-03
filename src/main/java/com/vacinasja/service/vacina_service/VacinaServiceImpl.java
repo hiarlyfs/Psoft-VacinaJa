@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vacinasja.dto.vacina.VacinaDto;
+import com.vacinasja.error.vacina_error.VacinaInexistente;
 import com.vacinasja.model.Vacina;
 import com.vacinasja.repository.VacinaRepository;
 
@@ -29,8 +30,10 @@ public class VacinaServiceImpl implements VacinaService{
 	}
 
 	@Override
-	public Optional<Vacina> getVacinaById(Long id) {
-		return vacinaRepository.findById(id);
+	public Vacina getVacinaById(Long id) throws VacinaInexistente {
+		Optional<Vacina> vacinaEncontrada = vacinaRepository.findById(id);
+		if (!vacinaEncontrada.isPresent()) throw new VacinaInexistente(id);
+		return vacinaEncontrada.get();
 	}
 
 }
