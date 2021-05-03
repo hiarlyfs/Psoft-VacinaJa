@@ -49,6 +49,10 @@ public class LoteVacina {
 		return qtdDoses;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
 	public Vacina getTipoVacina() {
 		return vacina;
 	}

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.vacinasja.dto.lote_vacina.LoteVacinaDto;
+import com.vacinasja.dto.lote_vacina.InsertLoteVacinaDto;
 import com.vacinasja.error.lotevacina_error.LoteVacinaInexistente;
 import com.vacinasja.error.vacina_error.VacinaInexistente;
 import com.vacinasja.model.LoteVacina;
@@ -29,7 +29,7 @@ public class LoteVacinaController {
 	LoteVacinaService loteVacinaService;
 	
     @PostMapping("")
-    public ResponseEntity<LoteVacina> criarLoteVacina(@RequestBody LoteVacinaDto loteVacinaDto) throws ParseException, VacinaInexistente {
+    public ResponseEntity<LoteVacina> criarLoteVacina(@RequestBody InsertLoteVacinaDto loteVacinaDto) throws ParseException, VacinaInexistente {
         LoteVacina novoLoteVacina = loteVacinaService.cadastrarLoteVacina(loteVacinaDto);
         return new ResponseEntity<LoteVacina>(novoLoteVacina, HttpStatus.CREATED);
     }

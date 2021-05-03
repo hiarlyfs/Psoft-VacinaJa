@@ -9,7 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.vacinasja.dto.lote_vacina.LoteVacinaDto;
+import com.vacinasja.dto.lote_vacina.InsertLoteVacinaDto;
 import com.vacinasja.error.lotevacina_error.LoteVacinaInexistente;
 import com.vacinasja.error.vacina_error.VacinaInexistente;
 import com.vacinasja.model.LoteVacina;
@@ -27,7 +27,7 @@ public class LoteVacinaServiceImpl implements LoteVacinaService{
 	VacinaRepository vacinaRepository;
 
 	@Override
-	public LoteVacina cadastrarLoteVacina(LoteVacinaDto loteVacinaDto) throws ParseException, VacinaInexistente{
+	public LoteVacina cadastrarLoteVacina(InsertLoteVacinaDto loteVacinaDto) throws ParseException, VacinaInexistente{
 		Date dataValidade = new SimpleDateFormat("yyyy-MM-dd").parse(loteVacinaDto.getDataValidade());
 		
 		Optional<Vacina> vacina = vacinaRepository.findById(loteVacinaDto.getVacinaId());
