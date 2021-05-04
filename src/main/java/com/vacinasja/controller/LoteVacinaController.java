@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,18 +29,21 @@ public class LoteVacinaController {
 	@Autowired
 	LoteVacinaService loteVacinaService;
 	
+	@PreAuthorize("hasRole('ROLE_FUNCIONARIO')")
     @PostMapping("")
     public ResponseEntity<LoteVacina> criarLoteVacina(@RequestBody InsertLoteVacinaDto loteVacinaDto) throws ParseException, VacinaInexistente {
     	LoteVacina novoLoteVacina = loteVacinaService.cadastrarLoteVacina(loteVacinaDto);
         return new ResponseEntity<LoteVacina>(novoLoteVacina, HttpStatus.CREATED);
     }
     
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_FUNCIONARIO')")
     @GetMapping("")
     public ResponseEntity<LoteVacina> getLoteVacinaById(@RequestParam Long id) throws LoteVacinaInexistente{
 		LoteVacina vacinaEncontrada = loteVacinaService.getLoteVacinaById(id);
 		return new ResponseEntity<LoteVacina>(vacinaEncontrada, HttpStatus.OK);
     }
     
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_FUNCIONARIO')")
     @GetMapping("/all")
     public ResponseEntity<List<LoteVacina>> getAllLoteVacina() {
     	List<LoteVacina> listaTodosLoteVacina = loteVacinaService.allLotesVacina();
