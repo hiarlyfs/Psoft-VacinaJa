@@ -2,8 +2,6 @@ package com.vacinasja.controller;
 
 import java.util.List;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,12 +28,14 @@ public class VacinaController {
         return new ResponseEntity<Vacina>(novaVacina, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_FUNCIONARIO')")
     @GetMapping("")
     public ResponseEntity<Vacina> getVacinaById(@RequestParam Long id) throws VacinaInexistente{
 		Vacina vacinaEncontrada = vacinaService.getVacinaById(id);
 		return new ResponseEntity<Vacina>(vacinaEncontrada, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_FUNCIONARIO')")
     @GetMapping("/all")
     public ResponseEntity<List<Vacina>> getAllVacinas() {
     	List<Vacina> listaTodasVacinas = vacinaService.allTiposVacina();
