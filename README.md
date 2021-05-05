@@ -7,6 +7,8 @@
 Para inicializar o projeto é ncessário possui as seguintes variáveis de ambiente:
 
     - DATA_SOURCE_URL: Url do banco de dados
+    - EMAIL_USERNAME: Usuário do e-mail(gmail)
+    - EMAIL_PASSWORD: Senha do e-mail(gmail)
     
 ### Arquivo 
 
