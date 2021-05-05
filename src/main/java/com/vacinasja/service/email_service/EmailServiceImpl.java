@@ -14,7 +14,7 @@ public class EmailServiceImpl implements EmailService {
     private final String fimEmail = "\n\nEsse e-mail é enviado automaticamente pelo sistema VacinaJá\n"
     		+ "para informar novidades sobre a sua vacinação. - 2021";
     
-    public void sendEmail(
+    public void enviarEmail(
       String destinatario, String assunto, String corpo) {
         SimpleMailMessage message = new SimpleMailMessage(); 
         message.setFrom("vacinasja.noreply@gmail.com");
