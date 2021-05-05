@@ -22,8 +22,6 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
-
-
                 // filtra outras requisições para verificar a presença do JWT no header
                 .addFilterBefore(tokenAuthrozationFilter(),
                         UsernamePasswordAuthenticationFilter.class);
