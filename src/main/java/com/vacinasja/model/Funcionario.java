@@ -20,6 +20,18 @@ public class Funcionario {
     public Funcionario() {
     }
 
+    public String getCpf() {
+        return this.cidadao.getCpf();
+    }
 
+    public Funcionario(Cidadao cidadao, String cargo, String localTrabalho, StatusCadastro statusCadastro) {
+        this.cidadao = cidadao;
+        this.cargo = cargo;
+        this.localTrabalho = localTrabalho;
+        this.statusCadastro = statusCadastro;
+    }
 
+    public String getStatusCadastroString() {
+        return this.statusCadastro.getStatus();
+    }
 }

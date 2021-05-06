@@ -60,4 +60,8 @@ public class Cidadao {
     public String getCpf() {
         return cpf;
     }
+
+    public String getCartaoSus() {
+        return cartaoSus;
+    }
 }
