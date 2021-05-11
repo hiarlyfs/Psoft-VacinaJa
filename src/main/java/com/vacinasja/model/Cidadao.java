@@ -75,6 +75,7 @@ public class Cidadao {
         return cpf;
     }
 
+
     public String getProfissao() {
         return profissao;
     }
@@ -125,5 +126,8 @@ public class Cidadao {
     // usado para retornar o estágio atual de vacinação do cidadão
     public String getEstagioVacinacao() {
         return estagioVacinacao.toString();
+      
+    public String getCartaoSus() {
+        return cartaoSus;
     }
 }

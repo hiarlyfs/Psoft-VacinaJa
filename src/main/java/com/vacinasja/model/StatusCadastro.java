@@ -13,4 +13,8 @@ public class StatusCadastro {
 
     public StatusCadastro() {
     }
+
+    public String getStatus() {
+        return this.status;
+    }
 }

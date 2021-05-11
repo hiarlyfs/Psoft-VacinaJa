@@ -1,6 +1,7 @@
 package com.vacinasja.controller;
 
 import com.vacinasja.dto.login.LoginDto;
+import com.vacinasja.error.login_error.AguardandoAprovacao;
 import com.vacinasja.error.login_error.LoginInvalido;
 import com.vacinasja.error.tipo_login_error.TipoLoginInvalido;
 import com.vacinasja.service.login_service.LoginService;
@@ -18,11 +19,9 @@ public class LoginController {
     LoginService loginService;
 
     @PostMapping("")
-    public ResponseEntity<?> login(@RequestBody LoginDto loginDto) throws LoginInvalido, TipoLoginInvalido {
+    public ResponseEntity<?> login(@RequestBody LoginDto loginDto) throws LoginInvalido, AguardandoAprovacao {
         String jwt = loginService.login(loginDto);
         return new ResponseEntity<>(jwt, HttpStatus.OK);
     }
-
-
 
 }

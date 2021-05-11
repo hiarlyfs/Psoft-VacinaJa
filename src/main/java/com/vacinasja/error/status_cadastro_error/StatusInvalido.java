@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(code = HttpStatus.NOT_ACCEPTABLE)
 public class StatusInvalido extends Exception{
-    static final String STATUS_INVALIDO = "O %s não existe";
+    static final String STATUS_INVALIDO = "O status %s não existe";
 
     public StatusInvalido(String status) {
         super(String.format(STATUS_INVALIDO, status));

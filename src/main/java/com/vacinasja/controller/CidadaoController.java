@@ -20,7 +20,7 @@ public class CidadaoController {
     @Autowired
     CidadaoService cidadaoService;
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<LoginCidadao> save(@RequestBody InsertCidadaoDto insertCidadaoDto) throws ParseException, TipoLoginInvalido {
         LoginCidadao loginCidadao = cidadaoService.save(insertCidadaoDto);
 

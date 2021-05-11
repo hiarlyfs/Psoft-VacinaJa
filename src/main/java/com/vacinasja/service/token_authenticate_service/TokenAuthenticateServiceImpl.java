@@ -1,6 +1,8 @@
 package com.vacinasja.service.token_authenticate_service;
 
 import com.vacinasja.model.Login;
+import com.vacinasja.model.LoginFuncionario;
+import com.vacinasja.service.login_funcionario_service.LoginFuncionarioService;
 import com.vacinasja.service.login_service.LoginService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -21,6 +23,9 @@ public class TokenAuthenticateServiceImpl implements TokenAuthenticateService {
 
     @Autowired
     LoginService loginService;
+
+    @Autowired
+    LoginFuncionarioService loginFuncionarioService;
 
     static final long EXPIRATION_TIME = 86_400_000;
     static final String SECRET = "16bd8dfba2191761b65d5a795806e530";
@@ -49,16 +54,23 @@ public class TokenAuthenticateServiceImpl implements TokenAuthenticateService {
 
 
             if (login != null) {
-                Login userLogin = loginService.findByUserLogin(login);
-
-                if (userLogin != null) {
-                    List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-                    authorities.add(new SimpleGrantedAuthority("ROLE_" + userLogin.getTipoLogin()));
-                    return new UsernamePasswordAuthenticationToken(userLogin.getLogin(), "", authorities);
-                }
+                return getUsernamePasswordRoles(login);
             }
 
         }
         return null;
+    }
+
+    private UsernamePasswordAuthenticationToken getUsernamePasswordRoles(String login) {
+        Login userLogin = loginService.findByUserLogin(login);
+
+        if (userLogin == null) {
+            return null;
+        }
+
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + userLogin.getTipoLogin()));
+        return new UsernamePasswordAuthenticationToken(userLogin.getLogin(), "", authorities);
+
     }
 }
