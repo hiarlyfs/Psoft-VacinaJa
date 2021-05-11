@@ -44,6 +44,7 @@ public class CidadaoServiceImpl implements  CidadaoService{
         }
 
         return cidadao.get().getEstagioVacinacao(); // String de representação do estágio como na especificação.
+    }
 
     @Override
     public Cidadao findByCpf(String cpf) throws CidadaoInvalido {
