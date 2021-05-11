@@ -15,6 +15,8 @@ import com.vacinasja.service.status_cadastro_service.StatusCadastroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service
 public class FuncionarioServiceImpl implements FuncionarioService{
 
@@ -27,15 +29,12 @@ public class FuncionarioServiceImpl implements FuncionarioService{
     @Autowired
     FuncionarioRepository funcionarioRepository;
 
-    @Autowired
-    StatusCadastroService statusCadastroService;
-
     @Override
-    public LoginFuncionario save(InsertFuncionarioDto insertFuncionarioDto) throws CidadaoInvalido, StatusInvalido, TipoLoginInvalido {
+    public LoginFuncionario save(InsertFuncionarioDto insertFuncionarioDto) throws CidadaoInvalido, TipoLoginInvalido, StatusInvalido {
         Cidadao cidadao = cidadaoService.findByCpf(insertFuncionarioDto.getCpf());
-        StatusCadastro statusCadastro = statusCadastroService.findByStatus("PENDENTE");
-        Funcionario funcionario = new Funcionario(cidadao, insertFuncionarioDto.getCargo(), insertFuncionarioDto.getLocalTrabalho(), statusCadastro);
+        Funcionario funcionario = new Funcionario(cidadao, insertFuncionarioDto.getCargo(), insertFuncionarioDto.getLocalTrabalho());
         funcionarioRepository.save(funcionario);
         return loginFuncionarioService.save(funcionario);
     }
+
 }

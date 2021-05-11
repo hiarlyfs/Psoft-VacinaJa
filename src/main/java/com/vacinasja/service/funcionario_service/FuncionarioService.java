@@ -7,6 +7,9 @@ import com.vacinasja.error.tipo_login_error.TipoLoginInvalido;
 import com.vacinasja.model.Funcionario;
 import com.vacinasja.model.LoginFuncionario;
 
+import java.util.Map;
+
 public interface FuncionarioService {
     LoginFuncionario save(InsertFuncionarioDto insertFuncionarioDto) throws CidadaoInvalido, StatusInvalido, TipoLoginInvalido;
+
 }

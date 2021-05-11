@@ -21,12 +21,17 @@ public class LoginFuncionario {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Funcionario funcionario;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private StatusCadastro statusCadastro;
+
+
     public LoginFuncionario() {
     }
 
-    public LoginFuncionario(Login login, Funcionario funcionario) {
+    public LoginFuncionario(Login login, Funcionario funcionario, StatusCadastro statusCadastro) {
         this.login = login;
         this.funcionario = funcionario;
+        this.statusCadastro = statusCadastro;
     }
 
     public Login getLogin() {
@@ -34,6 +39,10 @@ public class LoginFuncionario {
     }
 
     public String getStatusCadastro() {
-        return this.funcionario.getStatusCadastroString();
+        return this.statusCadastro.getStatus();
+    }
+
+    public Long getId() {
+        return id;
     }
 }

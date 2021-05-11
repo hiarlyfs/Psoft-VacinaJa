@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/funcionario")
 @CrossOrigin
@@ -26,4 +28,5 @@ public class FuncionarioController {
 
         return new ResponseEntity<>(loginFuncionario, HttpStatus.OK);
     }
+
 }
