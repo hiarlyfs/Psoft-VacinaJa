@@ -45,4 +45,8 @@ public class LoginFuncionario {
     public Long getId() {
         return id;
     }
+
+    public void setStatusCadastro(StatusCadastro novoStatusCadastro) {
+        this.statusCadastro = novoStatusCadastro;
+    }
 }

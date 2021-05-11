@@ -1,5 +1,6 @@
 package com.vacinasja.service.login_funcionario_service;
 
+import com.vacinasja.dto.login_funcionario.AuthorizeFuncionarioDto;
 import com.vacinasja.error.login_error.AguardandoAprovacao;
 import com.vacinasja.error.status_cadastro_error.StatusInvalido;
 import com.vacinasja.error.tipo_login_error.TipoLoginInvalido;
@@ -61,6 +62,27 @@ public class LoginFuncionarioServiceImpl implements LoginFuncionarioService{
 
         return funcionariosData;
     }
+
+    @Override
+    public void authorizeFuncionarios(List<AuthorizeFuncionarioDto> authorizeFuncionariosDto) throws StatusInvalido {
+        StatusCadastro novoStatusCadastro = statusCadastroService.findByStatus("CONFIRMADO");
+
+        authorizeFuncionariosDto.forEach(dto -> {
+            authorizeFuncionarioByLogin(novoStatusCadastro, dto.getLogin());
+        });
+    }
+
+    private void authorizeFuncionarioByLogin(StatusCadastro novoStatusCadastro, String loginFuncionario) {
+        Login login = loginService.findByUserLogin(loginFuncionario);
+        Optional<LoginFuncionario> loginFuncionarioOptional = loginFuncionarioRepository.findByLogin(login);
+
+        if (loginFuncionarioOptional.isPresent()) {
+            LoginFuncionario loginFuncionarioExistente = loginFuncionarioOptional.get();
+            loginFuncionarioExistente.setStatusCadastro(novoStatusCadastro);
+            loginFuncionarioRepository.save(loginFuncionarioExistente);
+        }
+    }
+
 
     private Map<String, Object>  parseFuncionarioLoginData(LoginFuncionario funcionario) {
         Map<String, Object> fData = new HashMap<>();

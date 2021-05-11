@@ -1,5 +1,6 @@
 package com.vacinasja.controller;
 
+import com.vacinasja.dto.login_funcionario.AuthorizeFuncionarioDto;
 import com.vacinasja.error.status_cadastro_error.StatusInvalido;
 import com.vacinasja.service.login_funcionario_service.LoginFuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,18 @@ public class LoginFuncionarioController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/authorize")
-    public ResponseEntity<List<Map<String, Object>>> getFuncionariosToAuthorzie() throws StatusInvalido {
+    public ResponseEntity<List<Map<String, Object>>> getFuncionariosToAuthorize() throws StatusInvalido {
         List<Map<String, Object>> loginFuncionarios = loginFuncionarioService.getLoginsToAuthorize();
         return new ResponseEntity<>(loginFuncionarios, HttpStatus.OK);
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/authorize")
+    public ResponseEntity<List<Map<String, Object>>> authorizeFuncionarios(@RequestBody List<AuthorizeFuncionarioDto>  authorizeFuncionariosDto) throws StatusInvalido {
+        loginFuncionarioService.authorizeFuncionarios(authorizeFuncionariosDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 
 }
