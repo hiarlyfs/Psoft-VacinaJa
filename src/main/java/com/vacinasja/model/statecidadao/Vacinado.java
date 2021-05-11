@@ -14,7 +14,8 @@ public class Vacinado extends Estado {
     }
 
     @Override
-    public void tentaAlterar(Cidadao cidadao, LocalDate data) { // faz nada, já está vacinado.
+    public boolean tentaAlterar(Cidadao cidadao, LocalDate data) { // faz nada, já está vacinado.
+        return false;
     }
 
     @Override

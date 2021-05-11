@@ -17,7 +17,8 @@ public class NaoHabilitado extends Estado {
     }
 
     @Override
-    public void tentaAlterar(Cidadao cidadao, LocalDate data) { // faz nada, pois não tomou a dose.
+    public boolean tentaAlterar(Cidadao cidadao, LocalDate data) { // faz nada, pois não tomou a dose.
+        return false;
     }
 
     @Override

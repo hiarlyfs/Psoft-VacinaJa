@@ -14,7 +14,8 @@ public class Habilitado2Dose extends Estado {
     }
 
     @Override
-    public void tentaAlterar(Cidadao cidadao, LocalDate data) { // faz nada, pois já tomou a primeira dose.
+    public boolean tentaAlterar(Cidadao cidadao, LocalDate data) { // faz nada, pois já tomou a primeira dose.
+        return false;
     }
 
     @Override

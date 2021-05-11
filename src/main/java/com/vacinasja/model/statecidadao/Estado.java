@@ -15,7 +15,7 @@ public abstract class Estado {
 
     public abstract void tentaAlterar(Cidadao cidadao, Integer idade, String profissao, String comorbidade);
 
-    public abstract void tentaAlterar(Cidadao cidadao, LocalDate data);
+    public abstract boolean tentaAlterar(Cidadao cidadao, LocalDate data);
 
     public abstract void tentaAlterar(Cidadao cidadao, Vacina vacina);
 }

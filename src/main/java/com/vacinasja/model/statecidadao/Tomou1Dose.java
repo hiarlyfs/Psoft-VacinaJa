@@ -16,11 +16,12 @@ public class Tomou1Dose extends Estado {
     }
 
     @Override
-    public void tentaAlterar(Cidadao cidadao, LocalDate data) {
+    public boolean tentaAlterar(Cidadao cidadao, LocalDate data) {
         // compara se a diferença entre o dia que tomou a dose e o dia atual é igual (ou maior) ao tempo de espera para se tornar habilitado, se for, então muda o estado para habilitado.
         if (Period.between(cidadao.getDiaTomouDose().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), data).getDays() >= cidadao.getIntervaloDoses()) {
             cidadao.setNewEstagioVacinacao(new Habilitado2Dose());
         }
+        return true;
     }
 
     @Override
