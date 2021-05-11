@@ -4,10 +4,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(code = HttpStatus.FORBIDDEN)
-public class LoginInvalido extends Exception {
-    static final String LOGIN_INVALIDO = "Login inválido ou inexistente";
+public class AguardandoAprovacao extends Exception {
+    static final String LOGIN_INVALIDO = "Aguardando aprovação do administrador do sistema";
 
-    public LoginInvalido() {
+    public AguardandoAprovacao() {
         super(LOGIN_INVALIDO);
     }
 
