@@ -1,6 +1,7 @@
 package com.vacinasja.service.cidadao_service;
 
 import com.vacinasja.dto.cidadao.InsertCidadaoDto;
+import com.vacinasja.error.cidadao_error.CidadaoNaoEncontrado;
 import com.vacinasja.error.tipo_login_error.TipoLoginInvalido;
 import com.vacinasja.model.Cidadao;
 import com.vacinasja.model.LoginCidadao;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class CidadaoServiceImpl implements  CidadaoService{
@@ -31,5 +33,15 @@ public class CidadaoServiceImpl implements  CidadaoService{
 
         cidadaoRepository.save(novoCidadao);
         return loginCidadaoService.criarLoginCidadao(novoCidadao);
+    }
+
+    public String listaEstagioCidadao(String cpf) throws CidadaoNaoEncontrado {
+        Optional<Cidadao> cidadao = cidadaoRepository.findByCpf(cpf);
+
+        if (!cidadao.isPresent()) {
+            throw new CidadaoNaoEncontrado(cpf);
+        }
+
+        return cidadao.get().getEstagioVacinacao(); // String de representação do estágio como na especificação.
     }
 }
