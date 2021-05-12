@@ -79,10 +79,6 @@ public class Cidadao {
         this.nome = nome;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
     public void setProfissao(String profissao) {
         this.profissao = profissao;
     }
@@ -101,10 +97,6 @@ public class Cidadao {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     public void setEndereco(String endereco) {
