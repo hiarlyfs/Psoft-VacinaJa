@@ -24,6 +24,7 @@ public class EstadoVacinacaoListener implements ApplicationListener<EstadoVacina
 	@Override
 	public void onApplicationEvent(EstadoVacinacaoAtualizadoEvent event){
 		Cidadao cidadao = (Cidadao) event.getSource();
+		// To-Do, verificar se a atualização de estado precisa que envie email.
 		enviarEmail(cidadao);
 	}
 	
