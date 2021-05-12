@@ -75,24 +75,63 @@ public class Cidadao {
         return cpf;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setProfissao(String profissao) {
+        this.profissao = profissao;
+    }
 
     public String getProfissao() {
         return profissao;
     }
 
-    public int getIdade() {
-        return Period.between(dataNascimento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), LocalDate.now()).getYears();
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
-    public List<String> getComorbidades() {
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setComorbidade(List<String> comorbidade) {
+        this.comorbidade = comorbidade;
+    }
+
+    public List<String> getComorbidade() {
         return comorbidade;
+    }
+
+    public int calculaIdade() {
+        return Period.between(dataNascimento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), LocalDate.now()).getYears();
     }
 
     public void setDiaTomouDose(Date dia) {
         this.diaTomouDose = dia;
     }
 
-    public Date getDiaTomouDose() {
+    public Date pegaDiaTomouDose() {
         return diaTomouDose;
     }
 
@@ -100,7 +139,7 @@ public class Cidadao {
         this.intervaloDoses = intervaloDoses;
     }
 
-    public Integer getIntervaloDoses() {
+    public Integer pegaIntervaloDoses() {
         return intervaloDoses;
     }
 
