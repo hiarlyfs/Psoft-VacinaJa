@@ -11,7 +11,7 @@ public class NaoHabilitado extends Estado {
 
     @Override
     public void tentaAlterar(Cidadao cidadao, Integer idade, String profissao, String comorbidade) {
-        if (cidadao.getIdade() >= idade || cidadao.getProfissao().equals(profissao) || cidadao.getComorbidades().contains(comorbidade)) {
+        if (cidadao.calculaIdade() >= idade || cidadao.getProfissao().equals(profissao) || cidadao.getComorbidade().contains(comorbidade)) {
             cidadao.setNewEstagioVacinacao(new Habilitado1Dose());
         }
     }
