@@ -12,7 +12,8 @@ import java.time.ZoneId;
 public class Tomou1Dose extends Estado {
 
     @Override
-    public void tentaAlterar(Cidadao cidadao, Integer idade, String profissao, String comorbidade) { // faz nada, pois já está habilitado.
+    public Boolean tentaAlterar(Cidadao cidadao, Integer idade, String profissao, String comorbidade) { // faz nada, pois já está habilitado.
+        return false;
     }
 
     @Override
@@ -25,7 +26,8 @@ public class Tomou1Dose extends Estado {
     }
 
     @Override
-    public void tentaAlterar(Cidadao cidadao, Vacina vacina) { // faz nada, esperando estar habilitado.
+    public Boolean tentaAlterar(Cidadao cidadao, Vacina vacina) { // faz nada, esperando estar habilitado.
+        return false;
     }
 
     @Override

@@ -144,8 +144,8 @@ public class Cidadao {
     }
 
     // a ser utilizado pela notificação de alteração do funcionário (para habilitar não habilitados)
-    public void passarEstagio(Integer idade, String profissao, String comorbidade) {
-        estagioVacinacao.tentaAlterar(this, idade, profissao, comorbidade);
+    public Boolean passarEstagio(Integer idade, String profissao, String comorbidade) {
+        return estagioVacinacao.tentaAlterar(this, idade, profissao, comorbidade);
     }
 
     // a ser utilizado pela notificação de alteração diária do sistema (para habilitar para segunda dose quem tomou a primeira) // data = LocalDate.now()
@@ -154,8 +154,8 @@ public class Cidadao {
     }
 
     // a ser utilizado pelo funcionário para registrar a vacinação do paciente (só é realizado para cidadãos habilitados)
-    public void vacinar(Vacina vacina) {
-        estagioVacinacao.tentaAlterar(this, vacina);
+    public Boolean vacinar(Vacina vacina) {
+        return estagioVacinacao.tentaAlterar(this, vacina);
     }
 
     public void setNewEstagioVacinacao(Estado newEstagioVacinacao) {
