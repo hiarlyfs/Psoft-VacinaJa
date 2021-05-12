@@ -13,9 +13,9 @@ public abstract class Estado {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    public abstract void tentaAlterar(Cidadao cidadao, Integer idade, String profissao, String comorbidade);
+    public abstract Boolean tentaAlterar(Cidadao cidadao, Integer idade, String profissao, String comorbidade);
 
     public abstract boolean tentaAlterar(Cidadao cidadao, LocalDate data);
 
-    public abstract void tentaAlterar(Cidadao cidadao, Vacina vacina);
+    public abstract Boolean tentaAlterar(Cidadao cidadao, Vacina vacina);
 }

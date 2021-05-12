@@ -1,7 +1,7 @@
 package com.vacinasja.service.cidadao_service;
 
 import com.vacinasja.dto.cidadao.InsertCidadaoDto;
-
+import com.vacinasja.dto.cidadao.UpdateCidadaoDto;
 import com.vacinasja.error.cidadao_error.CidadaoNaoEncontrado;
 import com.vacinasja.error.tipo_login_error.TipoLoginInvalido;
 import com.vacinasja.model.Cidadao;
@@ -33,6 +33,23 @@ public class CidadaoServiceImpl implements  CidadaoService{
                 insertCidadaoDto.getTelefone(), insertCidadaoDto.getProfissao(), insertCidadaoDto.getCormobidades());
         cidadaoRepository.save(novoCidadao);
         return loginCidadaoService.criarLoginCidadao(novoCidadao);
+    }
+
+    @Override
+    public Cidadao update(String cpf, UpdateCidadaoDto updateCidadaoDto) throws CidadaoNaoEncontrado {
+        // atualizar para pegar o cidadão da sessão atual.
+        Cidadao cidadao = findByCpf(cpf);
+        // fazer validação de formato dos dados -> email / telefone / nome nao nulo
+
+        cidadao.setComorbidade(updateCidadaoDto.getCormobidades());
+        cidadao.setEmail(updateCidadaoDto.getEmail());
+        cidadao.setProfissao(updateCidadaoDto.getProfissao());
+        cidadao.setTelefone(updateCidadaoDto.getTelefone());
+        cidadao.setEndereco(updateCidadaoDto.getEndereco());
+        cidadao.setNome(updateCidadaoDto.getNomeCompleto());
+        cidadaoRepository.save(cidadao);
+
+        return cidadao;
     }
 
     public String listaEstagioCidadao(String cpf) throws CidadaoNaoEncontrado {
