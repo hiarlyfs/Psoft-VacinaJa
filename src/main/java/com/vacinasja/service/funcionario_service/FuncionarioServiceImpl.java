@@ -1,7 +1,7 @@
 package com.vacinasja.service.funcionario_service;
 
 import com.vacinasja.dto.funcionario.InsertFuncionarioDto;
-import com.vacinasja.error.cidadao_error.CidadaoInvalido;
+import com.vacinasja.error.cidadao_error.CidadaoNaoEncontrado;
 import com.vacinasja.error.status_cadastro_error.StatusInvalido;
 import com.vacinasja.error.tipo_login_error.TipoLoginInvalido;
 import com.vacinasja.model.Cidadao;
@@ -30,7 +30,7 @@ public class FuncionarioServiceImpl implements FuncionarioService{
     FuncionarioRepository funcionarioRepository;
 
     @Override
-    public LoginFuncionario save(InsertFuncionarioDto insertFuncionarioDto) throws CidadaoInvalido, TipoLoginInvalido, StatusInvalido {
+    public LoginFuncionario save(InsertFuncionarioDto insertFuncionarioDto) throws CidadaoNaoEncontrado, TipoLoginInvalido, StatusInvalido {
         Cidadao cidadao = cidadaoService.findByCpf(insertFuncionarioDto.getCpf());
         Funcionario funcionario = new Funcionario(cidadao, insertFuncionarioDto.getCargo(), insertFuncionarioDto.getLocalTrabalho());
         funcionarioRepository.save(funcionario);

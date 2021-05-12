@@ -3,7 +3,6 @@ package com.vacinasja.service.cidadao_service;
 import com.vacinasja.dto.cidadao.InsertCidadaoDto;
 
 import com.vacinasja.error.cidadao_error.CidadaoNaoEncontrado;
-import com.vacinasja.error.cidadao_error.CidadaoInvalido;
 import com.vacinasja.error.tipo_login_error.TipoLoginInvalido;
 import com.vacinasja.model.Cidadao;
 import com.vacinasja.model.LoginCidadao;
@@ -47,11 +46,11 @@ public class CidadaoServiceImpl implements  CidadaoService{
     }
 
     @Override
-    public Cidadao findByCpf(String cpf) throws CidadaoInvalido {
+    public Cidadao findByCpf(String cpf) throws CidadaoNaoEncontrado {
         Optional<Cidadao> cidadao = cidadaoRepository.findByCpf(cpf);
 
         if (!cidadao.isPresent()) {
-            throw new CidadaoInvalido();
+            throw new CidadaoNaoEncontrado(cpf);
         }
 
         return cidadao.get();
