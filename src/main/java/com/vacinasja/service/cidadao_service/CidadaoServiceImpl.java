@@ -1,6 +1,8 @@
 package com.vacinasja.service.cidadao_service;
 
 import com.vacinasja.dto.cidadao.InsertCidadaoDto;
+
+import com.vacinasja.error.cidadao_error.CidadaoNaoEncontrado;
 import com.vacinasja.error.cidadao_error.CidadaoInvalido;
 import com.vacinasja.error.tipo_login_error.TipoLoginInvalido;
 import com.vacinasja.model.Cidadao;
@@ -34,6 +36,16 @@ public class CidadaoServiceImpl implements  CidadaoService{
         return loginCidadaoService.criarLoginCidadao(novoCidadao);
     }
 
+    public String listaEstagioCidadao(String cpf) throws CidadaoNaoEncontrado {
+        Optional<Cidadao> cidadao = cidadaoRepository.findByCpf(cpf);
+
+        if (!cidadao.isPresent()) {
+            throw new CidadaoNaoEncontrado(cpf);
+        }
+
+        return cidadao.get().getEstagioVacinacao(); // String de representação do estágio como na especificação.
+    }
+
     @Override
     public Cidadao findByCpf(String cpf) throws CidadaoInvalido {
         Optional<Cidadao> cidadao = cidadaoRepository.findByCpf(cpf);
@@ -43,5 +55,6 @@ public class CidadaoServiceImpl implements  CidadaoService{
         }
 
         return cidadao.get();
+
     }
 }
