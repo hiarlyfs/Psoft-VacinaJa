@@ -2,7 +2,8 @@ package com.vacinasja.service.cidadao_service;
 
 import com.vacinasja.dto.cidadao.InsertCidadaoDto;
 import com.vacinasja.dto.cidadao.UpdateCidadaoDto;
-import com.vacinasja.error.cidadao_error.CidadaoNaoEncontrado;
+import com.vacinasja.error.cidadao_error.CidadaoNaoEncontradoCartaoSus;
+import com.vacinasja.error.cidadao_error.CidadaoNaoEncontradoCpf;
 import com.vacinasja.error.tipo_login_error.TipoLoginInvalido;
 import com.vacinasja.model.Cidadao;
 import com.vacinasja.model.LoginCidadao;
@@ -36,9 +37,8 @@ public class CidadaoServiceImpl implements  CidadaoService{
     }
 
     @Override
-    public Cidadao update(String cpf, UpdateCidadaoDto updateCidadaoDto) throws CidadaoNaoEncontrado {
-        // atualizar para pegar o cidadão da sessão atual.
-        Cidadao cidadao = findByCpf(cpf);
+    public Cidadao update(String cartaoSus, UpdateCidadaoDto updateCidadaoDto) throws CidadaoNaoEncontradoCartaoSus {
+        Cidadao cidadao = findByCartaoSus(cartaoSus);
         // fazer validação de formato dos dados -> email / telefone / nome nao nulo
 
         cidadao.setComorbidade(updateCidadaoDto.getCormobidades());
@@ -52,25 +52,31 @@ public class CidadaoServiceImpl implements  CidadaoService{
         return cidadao;
     }
 
-    public String listaEstagioCidadao(String cpf) throws CidadaoNaoEncontrado {
-        Optional<Cidadao> cidadao = cidadaoRepository.findByCpf(cpf);
-
-        if (!cidadao.isPresent()) {
-            throw new CidadaoNaoEncontrado(cpf);
-        }
-
-        return cidadao.get().getEstagioVacinacao(); // String de representação do estágio como na especificação.
+    public String listaEstagioCidadao(String cartaoSus) throws CidadaoNaoEncontradoCartaoSus {
+        Cidadao cidadao = findByCartaoSus(cartaoSus);
+        return cidadao.getEstagioVacinacao(); // String de representação do estágio como na especificação.
     }
 
     @Override
-    public Cidadao findByCpf(String cpf) throws CidadaoNaoEncontrado {
+    public Cidadao findByCpf(String cpf) throws CidadaoNaoEncontradoCpf {
         Optional<Cidadao> cidadao = cidadaoRepository.findByCpf(cpf);
 
         if (!cidadao.isPresent()) {
-            throw new CidadaoNaoEncontrado(cpf);
+            throw new CidadaoNaoEncontradoCpf(cpf);
         }
 
         return cidadao.get();
 
+    }
+
+    @Override
+    public Cidadao findByCartaoSus(String cartaoSus) throws CidadaoNaoEncontradoCartaoSus {
+        Optional<Cidadao> cidadao = cidadaoRepository.findByCartaoSus(cartaoSus);
+
+        if (!cidadao.isPresent()) {
+            throw new CidadaoNaoEncontradoCartaoSus(cartaoSus);
+        }
+
+        return cidadao.get();
     }
 }

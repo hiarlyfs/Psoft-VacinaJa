@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface CidadaoRepository extends JpaRepository<Cidadao, Long> {
     Optional<Cidadao> findByCpf(String cpf);
+    Optional<Cidadao> findByCartaoSus(String cartaoSus);
 }
