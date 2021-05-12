@@ -30,7 +30,7 @@ public class Cidadao {
     @Column(unique = true)
     private String cartaoSus;
 
-    @NotNull
+	@NotNull
     @Column(unique = true)
     private String email;
 
@@ -128,7 +128,15 @@ public class Cidadao {
         return estagioVacinacao.toString();
     }
 
-    public String getCartaoSus() {
+    public String getEmail() {
+		return email;
+	}
+    
+    public String getNome() {
+		return nome;
+	}
+
+	public String getCartaoSus() {
         return cartaoSus;
     }
 }
