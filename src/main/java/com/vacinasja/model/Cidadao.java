@@ -75,24 +75,63 @@ public class Cidadao {
         return cpf;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setProfissao(String profissao) {
+        this.profissao = profissao;
+    }
 
     public String getProfissao() {
         return profissao;
     }
 
-    public int getIdade() {
-        return Period.between(dataNascimento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), LocalDate.now()).getYears();
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
-    public List<String> getComorbidades() {
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setComorbidade(List<String> comorbidade) {
+        this.comorbidade = comorbidade;
+    }
+
+    public List<String> getComorbidade() {
         return comorbidade;
+    }
+
+    public int calculaIdade() {
+        return Period.between(dataNascimento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), LocalDate.now()).getYears();
     }
 
     public void setDiaTomouDose(Date dia) {
         this.diaTomouDose = dia;
     }
 
-    public Date getDiaTomouDose() {
+    public Date pegaDiaTomouDose() {
         return diaTomouDose;
     }
 
@@ -100,13 +139,13 @@ public class Cidadao {
         this.intervaloDoses = intervaloDoses;
     }
 
-    public Integer getIntervaloDoses() {
+    public Integer pegaIntervaloDoses() {
         return intervaloDoses;
     }
 
     // a ser utilizado pela notificação de alteração do funcionário (para habilitar não habilitados)
-    public void passarEstagio(Integer idade, String profissao, String comorbidade) {
-        estagioVacinacao.tentaAlterar(this, idade, profissao, comorbidade);
+    public Boolean passarEstagio(Integer idade, String profissao, String comorbidade) {
+        return estagioVacinacao.tentaAlterar(this, idade, profissao, comorbidade);
     }
 
     // a ser utilizado pela notificação de alteração diária do sistema (para habilitar para segunda dose quem tomou a primeira) // data = LocalDate.now()
@@ -115,8 +154,8 @@ public class Cidadao {
     }
 
     // a ser utilizado pelo funcionário para registrar a vacinação do paciente (só é realizado para cidadãos habilitados)
-    public void vacinar(Vacina vacina) {
-        estagioVacinacao.tentaAlterar(this, vacina);
+    public Boolean vacinar(Vacina vacina) {
+        return estagioVacinacao.tentaAlterar(this, vacina);
     }
 
     public void setNewEstagioVacinacao(Estado newEstagioVacinacao) {

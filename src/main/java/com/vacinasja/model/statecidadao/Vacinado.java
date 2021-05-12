@@ -10,7 +10,8 @@ import java.time.LocalDate;
 public class Vacinado extends Estado {
 
     @Override
-    public void tentaAlterar(Cidadao cidadao, Integer idade, String profissao, String comorbidade) { // faz nada, já está vacinado.
+    public Boolean tentaAlterar(Cidadao cidadao, Integer idade, String profissao, String comorbidade) { // faz nada, já está vacinado.
+        return false;
     }
 
     @Override
@@ -19,7 +20,8 @@ public class Vacinado extends Estado {
     }
 
     @Override
-    public void tentaAlterar(Cidadao cidadao, Vacina vacina) { // faz nada, já está vacinado.
+    public Boolean tentaAlterar(Cidadao cidadao, Vacina vacina) { // faz nada, já está vacinado.
+        return false;
     }
 
     @Override

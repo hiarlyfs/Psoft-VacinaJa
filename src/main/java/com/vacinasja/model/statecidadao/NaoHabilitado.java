@@ -10,10 +10,11 @@ import java.time.LocalDate;
 public class NaoHabilitado extends Estado {
 
     @Override
-    public void tentaAlterar(Cidadao cidadao, Integer idade, String profissao, String comorbidade) {
-        if (cidadao.getIdade() >= idade || cidadao.getProfissao().equals(profissao) || cidadao.getComorbidades().contains(comorbidade)) {
+    public Boolean tentaAlterar(Cidadao cidadao, Integer idade, String profissao, String comorbidade) {
+        if (cidadao.calculaIdade() >= idade || cidadao.getProfissao().equals(profissao) || cidadao.getComorbidade().contains(comorbidade)) {
             cidadao.setNewEstagioVacinacao(new Habilitado1Dose());
         }
+        return true;
     }
 
     @Override
@@ -22,7 +23,8 @@ public class NaoHabilitado extends Estado {
     }
 
     @Override
-    public void tentaAlterar(Cidadao cidadao, Vacina vacina) { // faz nada, pois não está habilitado.
+    public Boolean tentaAlterar(Cidadao cidadao, Vacina vacina) { // faz nada, pois não está habilitado.
+        return false;
     }
 
     @Override
