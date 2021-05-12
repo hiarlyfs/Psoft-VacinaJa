@@ -115,6 +115,10 @@ public class Cidadao {
         return comorbidade;
     }
 
+    public Date getDataNascimento() {
+        return dataNascimento;
+    }
+
     public int calculaIdade() {
         return Period.between(dataNascimento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), LocalDate.now()).getYears();
     }
