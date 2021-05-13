@@ -14,12 +14,17 @@ public class Funcionario {
     private String cargo;
     private String localTrabalho;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private StatusCadastro statusCadastro;
-
     public Funcionario() {
     }
 
+    public String getCpf() {
+        return this.cidadao.getCpf();
+    }
 
+    public Funcionario(Cidadao cidadao, String cargo, String localTrabalho) {
+        this.cidadao = cidadao;
+        this.cargo = cargo;
+        this.localTrabalho = localTrabalho;
+    }
 
 }

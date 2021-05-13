@@ -1,5 +1,6 @@
 package com.vacinasja.security;
 
+import com.vacinasja.security.JWTAuthenticationFilter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -19,7 +20,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**")
                 .permitAll()
                 .antMatchers("/home").permitAll()
-                .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/login", "/cidadao", "/funcionario").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 // filtra outras requisições para verificar a presença do JWT no header

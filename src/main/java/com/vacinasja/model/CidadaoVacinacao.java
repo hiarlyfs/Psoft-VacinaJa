@@ -38,20 +38,48 @@ public class CidadaoVacinacao {
 	    @OneToOne(cascade = CascadeType.ALL)
 	    private LoteVacina lote;
 	    
-	    private String tipoVacina;
+	    @OneToOne(cascade = CascadeType.ALL)
+	    private Vacina tipoVacina;
 	    private int numDose;
 	    
 	    public CidadaoVacinacao() {
 
 	    }
 
-	    public CidadaoVacinacao(String cpf, Date dataVacinacao, LoteVacina lote, String tipoVacina, int numDose) {
+	    public CidadaoVacinacao(String cpf, Date dataVacinacao, LoteVacina lote, Vacina tipoVacina, int numDose) {
 	        this.cpf = cpf;
 	        this.dataVacinacao = dataVacinacao;
 	        this.lote = lote;
 	        this.tipoVacina = tipoVacina;
 	        this.numDose = numDose;
 	    }
+
+		public String getCpf() {
+			return cpf;
+		}
+
+		public Date getDataVacinacao() {
+			return dataVacinacao;
+		}
+
+
+		public LoteVacina getLote() {
+			return lote;
+		}
+		
+		public Vacina getTipoVacina() {
+			return tipoVacina;
+		}
+
+
+		public int getNumDose() {
+			return numDose;
+		}
+
+	    
+	    
+	    
+	    
 
 	    
 }
