@@ -25,6 +25,11 @@ public class Vacinado extends Estado {
     }
 
     @Override
+    public int getIntEstado() {
+        return 5;
+    }
+
+    @Override
     public String toString() {
         return "Finalizada vacinação";
     }

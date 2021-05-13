@@ -26,6 +26,11 @@ public class Habilitado2Dose extends Estado {
     }
 
     @Override
+    public int getIntEstado() {
+        return 4;
+    }
+
+    @Override
     public String toString() {
         return "Habilitado para tomar a 2o dose";
     }

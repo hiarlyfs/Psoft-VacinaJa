@@ -139,6 +139,10 @@ public class Cidadao {
         return intervaloDoses;
     }
 
+    public int pegaIntEstado() {
+        return estagioVacinacao.getIntEstado();
+    }
+
     // a ser utilizado pela notificação de alteração do funcionário (para habilitar não habilitados)
     public Boolean passarEstagio(Integer idade, String profissao, String comorbidade) {
         return estagioVacinacao.tentaAlterar(this, idade, profissao, comorbidade);

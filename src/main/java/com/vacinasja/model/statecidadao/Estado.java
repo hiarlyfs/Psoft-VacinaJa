@@ -18,4 +18,6 @@ public abstract class Estado {
     public abstract boolean tentaAlterar(Cidadao cidadao, LocalDate data);
 
     public abstract Boolean tentaAlterar(Cidadao cidadao, Vacina vacina);
+
+    public abstract int getIntEstado();
 }
