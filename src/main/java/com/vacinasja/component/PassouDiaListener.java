@@ -15,8 +15,6 @@ import com.vacinasja.model.Cidadao;
 import com.vacinasja.model.LocalVacinacao;
 import com.vacinasja.repository.CidadaoRepository;
 import com.vacinasja.repository.LocalVacinacaoRepository;
-import com.vacinasja.service.agendamento_service.AgendamentoService;
-import com.vacinasja.service.agendamento_service.LocalVacinacaoService;
 
 @Component
 public class PassouDiaListener implements ApplicationListener<PassouDiaEvent>{
@@ -32,29 +30,30 @@ public class PassouDiaListener implements ApplicationListener<PassouDiaEvent>{
 	
 	@Override
 	public void onApplicationEvent(PassouDiaEvent event) {
-		checarTodosCidadaos();
-		checarTodosAgendamentos();
+		ZoneId zid = ZoneId.of("America/Sao_Paulo");
+		LocalDate hoje = LocalDate.now(zid);
+		checarTodosCidadaos(hoje);
+		checarTodosAgendamentos(hoje);
 	}
 	
-	private void checarTodosAgendamentos() {
+	private void checarTodosAgendamentos(LocalDate hoje) {
 		System.out.println("Checando agendamentos para hoje.");
 		List<LocalVacinacao> locais = localVacinacaoRepository.findAll();
+		
 		for (LocalVacinacao local:locais) {
-			checaLocalVacinacao(local);
+			checaLocalVacinacao(local, hoje);
 		}
 	}
 	
-	private void checaLocalVacinacao(LocalVacinacao local) {
-		local.removeAgendamentosAnteriores();
+	private void checaLocalVacinacao(LocalVacinacao local, LocalDate hoje) {
+		local.removeAgendamentosAnteriores(hoje);
 		localVacinacaoRepository.save(local);
 	}
 
-	private void checarTodosCidadaos() {
+	private void checarTodosCidadaos(LocalDate hoje) {
 		System.out.println("Atualizando estado de vacinação por dia.");
 		List<Cidadao> cidadaos = cidadaoRepository.findAll();
 		
-		ZoneId zid = ZoneId.of("America/Sao_Paulo");
-		LocalDate hoje = LocalDate.now(zid);
 		for (Cidadao cidadao: cidadaos) {
 			checarCidadao(cidadao, hoje);
 		}
