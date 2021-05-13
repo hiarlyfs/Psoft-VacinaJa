@@ -54,10 +54,7 @@ public class LocalVacinacao {
 		return agendamentos;
 	}
 
-	public void removeAgendamentosAnteriores() {
-		ZoneId zid = ZoneId.of("America/Sao_Paulo");
-		LocalDate hoje = LocalDate.now(zid);
-		
+	public void removeAgendamentosAnteriores(LocalDate hoje) {
 		Iterator<Agendamento> iterator = agendamentos.iterator();
 		
 		while (iterator.hasNext()) {
