@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vacinasja.dto.agendamento.InsertLocalVacinacaoDto;
 import com.vacinasja.dto.agendamento.ListAgendamentoDto;
+import com.vacinasja.dto.agendamento.LocalVacinacaoDto;
 import com.vacinasja.error.local_vacinacao_error.LocalVacinacaoNaoEncontradoId;
 import com.vacinasja.model.LocalVacinacao;
 import com.vacinasja.service.agendamento_service.AgendamentoService;
@@ -41,9 +42,9 @@ public class LocalVacinacaoController {
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')") 
 	@GetMapping("/all")
-	public ResponseEntity<List<LocalVacinacao>> getAllLocais() {
-		List<LocalVacinacao> locais = localVacinacaoService.findAll();
-		return new ResponseEntity<List<LocalVacinacao>>(locais, HttpStatus.OK);
+	public ResponseEntity<List<LocalVacinacaoDto>> getAllLocais() {
+		List<LocalVacinacaoDto> locais = localVacinacaoService.findAll();
+		return new ResponseEntity<List<LocalVacinacaoDto>>(locais, HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_FUNCIONARIO')")

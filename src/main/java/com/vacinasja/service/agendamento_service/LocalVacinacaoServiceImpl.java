@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.vacinasja.dto.agendamento.InsertLocalVacinacaoDto;
 import com.vacinasja.dto.agendamento.ListAgendamentoDto;
+import com.vacinasja.dto.agendamento.LocalVacinacaoDto;
 import com.vacinasja.error.local_vacinacao_error.LocalVacinacaoNaoEncontradoId;
 import com.vacinasja.error.local_vacinacao_error.LocalVacinacaoNaoEncontradoNomeLocal;
 import com.vacinasja.model.Agendamento;
@@ -49,9 +50,13 @@ public class LocalVacinacaoServiceImpl implements LocalVacinacaoService {
 	}
 
 	@Override
-	public List<LocalVacinacao> findAll() {
+	public List<LocalVacinacaoDto> findAll() {
 		List<LocalVacinacao> listaLocaisVacinacao = localVacinacaoRepository.findAll();
-		return listaLocaisVacinacao;
+		List<LocalVacinacaoDto> listaDto = new ArrayList<LocalVacinacaoDto>();
+		for (LocalVacinacao local:listaLocaisVacinacao) {
+			listaDto.add(new LocalVacinacaoDto(local.getId(), local.getNomeLocal()));
+		}
+		return listaDto;
 	}
 	
 	@Override
