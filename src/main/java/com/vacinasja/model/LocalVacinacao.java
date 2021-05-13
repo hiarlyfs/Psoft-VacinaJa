@@ -53,6 +53,13 @@ public class LocalVacinacao {
 	public List<Agendamento> getAgendamentos() {
 		return agendamentos;
 	}
+	
+	
+
+	@Override
+	public String toString() {
+		return "Local de Vacinação " + id + " - " + nomeLocal;
+	}
 
 	public void removeAgendamentosAnteriores(LocalDate hoje) {
 		Iterator<Agendamento> iterator = agendamentos.iterator();

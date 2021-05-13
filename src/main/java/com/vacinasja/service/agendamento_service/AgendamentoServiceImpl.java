@@ -103,7 +103,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
 		for (LocalVacinacao localVacinacao : listaLocaisVacinacao) {
 			if (localVacinacao.existeCidadaoAgendado(cidadao)) {
 				Agendamento tempAgendamento = localVacinacao.getAgendamentoByCidadao(cidadao);
-				return new AgendamentoDto(dateFormat.format(tempAgendamento.getData()), tempAgendamento.getHorario().getHora(), localVacinacao);
+				return new AgendamentoDto(dateFormat.format(tempAgendamento.getData()), tempAgendamento.getHorario().getHora(), localVacinacao.toString());
 			}
 		}
 		throw new CidadaoSemAgendamentos();

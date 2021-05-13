@@ -5,12 +5,12 @@ import com.vacinasja.model.LocalVacinacao;
 public class AgendamentoDto {
 	private String data;
 	private String horario;
-	private LocalVacinacao local;
+	private String local;
 	
 	public AgendamentoDto() {
 	}
 
-	public AgendamentoDto(String data, String horario, LocalVacinacao local) {
+	public AgendamentoDto(String data, String horario, String local) {
 		super();
 		this.data = data;
 		this.horario = horario;
@@ -25,7 +25,7 @@ public class AgendamentoDto {
 		return horario;
 	}
 
-	public LocalVacinacao getLocal() {
+	public String getLocal() {
 		return local;
 	}
 	
