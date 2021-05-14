@@ -1,7 +1,6 @@
 package com.vacinasja.model;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,8 +28,8 @@ public class LocalVacinacao {
     
     private String nomeLocal;
     
+    @OneToMany(orphanRemoval = true)
     @Cascade(CascadeType.ALL)
-    @OneToMany
     private List<Agendamento> agendamentos;
     
     public LocalVacinacao() {

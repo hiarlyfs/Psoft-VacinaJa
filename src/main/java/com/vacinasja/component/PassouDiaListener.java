@@ -4,10 +4,14 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.vacinasja.event.estado_vacinacao.EstadoVacinacaoAtualizadoEvent;
 import com.vacinasja.event.passou_dia.PassouDiaEvent;
@@ -17,6 +21,7 @@ import com.vacinasja.repository.CidadaoRepository;
 import com.vacinasja.repository.LocalVacinacaoRepository;
 
 @Component
+@Transactional
 public class PassouDiaListener implements ApplicationListener<PassouDiaEvent>{
 
 	@Autowired
