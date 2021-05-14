@@ -42,7 +42,7 @@ public class LocalVacinacaoServiceImpl implements LocalVacinacaoService {
 		
 		List<Agendamento> agendamentos = optionalLocalVacinacao.get().getAgendamentos();
 		List<ListAgendamentoDto> agendamentosDto = new ArrayList<ListAgendamentoDto>();
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");  
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");  
 		for (Agendamento agendamento:agendamentos) {
 			agendamentosDto.add(new ListAgendamentoDto(dateFormat.format(agendamento.getData()), agendamento.getHorario().getHora(), agendamento.getCidadao().getCartaoSus()));
 		}

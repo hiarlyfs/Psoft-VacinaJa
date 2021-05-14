@@ -99,7 +99,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
 	
 	private AgendamentoDto getAgendamentoByCidadao(Cidadao cidadao) throws CidadaoSemAgendamentos {
 		List<LocalVacinacao> listaLocaisVacinacao = localVacinacaoRepository.findAll();
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");  
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");  
 		for (LocalVacinacao localVacinacao : listaLocaisVacinacao) {
 			if (localVacinacao.existeCidadaoAgendado(cidadao)) {
 				Agendamento tempAgendamento = localVacinacao.getAgendamentoByCidadao(cidadao);
