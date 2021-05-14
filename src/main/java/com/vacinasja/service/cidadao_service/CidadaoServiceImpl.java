@@ -14,11 +14,13 @@ import com.vacinasja.repository.CidadaoRepository;
 import com.vacinasja.repository.CidadaoVacinacaoRepository;
 import com.vacinasja.service.login_cidadao_service.LoginCidadaoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.quartz.LocalDataSourceJobStore;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -102,11 +104,13 @@ public class CidadaoServiceImpl implements  CidadaoService{
     
     
     @Override
-    public List<Cidadao> findByProfissao(String profissao) {
+    public List<Cidadao> habilitarByProfissao(String profissao) {
         List<Cidadao> cidadaos = cidadaoRepository.findByProfissao(profissao);
+        
         for (Cidadao cidadao : cidadaos) {
+        	System.out.println(cidadao);
  		   if (cidadao.getEstadoVacinacao()  instanceof NaoHabilitado) {
- 			   cidadao.passarEstagioP(profissao);   
+ 			   cidadao.passarEstagioByProfissao(profissao);   
  		   } else if (cidadao.getEstadoVacinacao() instanceof Tomou1Dose) {
  			   LocalDate dataAtual = LocalDate.now();			   
  			   cidadao.passarEstagio(dataAtual);
@@ -117,11 +121,11 @@ public class CidadaoServiceImpl implements  CidadaoService{
 
 
 	@Override
-	public List<Cidadao> findByComorbidade(String comorbidade) {
+	public List<Cidadao> habilitarByComorbidade(String comorbidade) {
 		List<Cidadao> cidadaos = cidadaoRepository.findByComorbidade(comorbidade);
         for (Cidadao cidadao : cidadaos) {
  		   if (cidadao.getEstadoVacinacao()  instanceof NaoHabilitado) {
- 			   cidadao.passarEstagioC(comorbidade);   
+ 			   cidadao.passarEstagioByComorbidade(comorbidade);   
  		   } else if (cidadao.getEstadoVacinacao() instanceof Tomou1Dose) {
  			   LocalDate dataAtual = LocalDate.now();			   
  			   cidadao.passarEstagio(dataAtual);
@@ -131,21 +135,22 @@ public class CidadaoServiceImpl implements  CidadaoService{
 	}
 
 
-	
-
-
-	/*@Override
-	public List<Cidadao> findByIdade(Integer idade) {
-		List<Cidadao> cidadaos = cidadaoRepository.findByIdade(idade);
+	@Override
+	public List<Cidadao> habilitarByIdade(Integer idade) {
+		LocalDate dataAtual = LocalDate.now();
+		LocalDate data= dataAtual.minusYears(idade);
+		Date dataNascimento = Date.from(data.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		
+		List<Cidadao> cidadaos = cidadaoRepository.findByDataNascimentoLessThanEqual(dataNascimento);
         for (Cidadao cidadao : cidadaos) {
  		   if (cidadao.getEstadoVacinacao()  instanceof NaoHabilitado) {
- 			   cidadao.passarEstagio(idade);   
+ 			   cidadao.passarEstagioByIdade(idade);   
  		   } else if (cidadao.getEstadoVacinacao() instanceof Tomou1Dose) {
- 			   LocalDate dataAtual = LocalDate.now();			   
+ 			   			   
  			   cidadao.passarEstagio(dataAtual);
  		   }
         }
         return cidadaos;
-	}*/
+	}
     
 }

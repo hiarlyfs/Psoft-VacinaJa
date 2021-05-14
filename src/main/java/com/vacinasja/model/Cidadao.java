@@ -139,21 +139,17 @@ public class Cidadao {
         return intervaloDoses;
     }
 
-    // a ser utilizado pela notificação de alteração do funcionário (para habilitar não habilitados)
-   /* public Boolean passarEstagio(Integer idade, String profissao, String comorbidade) {
-        return estagioVacinacao.tentaAlterar(this, idade, profissao, comorbidade);
-    }*/
-    
-    public Boolean passarEstagio(Integer idade) {
+
+    public Boolean passarEstagioByIdade(Integer idade) {
         return estagioVacinacao.tentaAlterarByIdade(this, idade);
     }
     
-    public Boolean passarEstagioP(String profissao) {
+    public Boolean passarEstagioByProfissao(String profissao) {
         return estagioVacinacao.tentaAlterarByProfissao(this, profissao);
     }
     
     
-    public Boolean passarEstagioC(String comorbidade) {
+    public Boolean passarEstagioByComorbidade(String comorbidade) {
         return estagioVacinacao.tentaAlterarByComorbidade(this, comorbidade);
     }
  

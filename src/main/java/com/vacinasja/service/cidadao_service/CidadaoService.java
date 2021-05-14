@@ -19,7 +19,7 @@ public interface CidadaoService {
     Cidadao findByCpf(String cpf) throws CidadaoNaoEncontradoCpf;
     Cidadao findByCartaoSus(String cartaoSus) throws CidadaoNaoEncontradoCartaoSus;
     CidadaoVacinacao registrarVacinacao(CidadaoVacinacao cidadaoVacinacao) throws ParseException, TipoLoginInvalido;
-    List<Cidadao> findByProfissao(String profissao);
-    List<Cidadao> findByComorbidade(String comorbidade);
-   // List<Cidadao> findByIdade(Integer idade);
+    List<Cidadao> habilitarByProfissao(String profissao);
+    List<Cidadao> habilitarByComorbidade(String comorbidade);
+    List<Cidadao> habilitarByIdade(Integer idade);
 }

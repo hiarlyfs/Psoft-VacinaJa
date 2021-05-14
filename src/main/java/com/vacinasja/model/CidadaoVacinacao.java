@@ -38,6 +38,7 @@ public class CidadaoVacinacao {
 	    @OneToOne(cascade = CascadeType.ALL)
 	    private LoteVacina lote;
 	    
+	    
 	    @OneToOne(cascade = CascadeType.ALL)
 	    private Vacina tipoVacina;
 	    private int numDose;

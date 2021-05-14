@@ -13,6 +13,7 @@ import com.vacinasja.service.cidadao_service.CidadaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +38,7 @@ public class CidadaoController {
         return new ResponseEntity<>(loginCidadao, HttpStatus.OK);
     }
 
-    @GetMapping("/estagio")
+    @GetMapping("/estag	io")
     public ResponseEntity<String> listaEstagioCidadao(Authentication authentication) throws CidadaoNaoEncontradoCartaoSus {
         String estagio = cidadaoService.listaEstagioCidadao(authentication.getName());
         return new ResponseEntity<>(estagio, HttpStatus.OK);
@@ -55,28 +56,31 @@ public class CidadaoController {
         return new ResponseEntity<>(cidadao, HttpStatus.OK);
     }
     
+  //  @PreAuthorize("hasRole('ROLE_FUNCIONARIO')")
     @PostMapping("/registrar")
     public ResponseEntity<CidadaoVacinacao> registrarVacina(@RequestBody CidadaoVacinacao cidadaoVacinacao) throws ParseException, TipoLoginInvalido {
         CidadaoVacinacao registrarVacinacao = cidadaoService.registrarVacinacao(cidadaoVacinacao);
         return new ResponseEntity<>(registrarVacinacao, HttpStatus.OK);
     }
     
-   
+ //  @PreAuthorize("hasRole('ROLE_FUNCIONARIO')")
    @PostMapping("/habilitar-profissao")
    public ResponseEntity<List<Cidadao>> habilitarCidadaoProfissao(@RequestBody String profissao){
-	   List<Cidadao> cidadaosHabilitados = cidadaoService.findByProfissao(profissao);
+	   List<Cidadao> cidadaosHabilitados = cidadaoService.habilitarByProfissao(profissao);
 	   return new ResponseEntity<List<Cidadao>>(cidadaosHabilitados, HttpStatus.OK);
    }
    
-   /*@PostMapping("/habilitar")
+  // @PreAuthorize("hasRole('ROLE_FUNCIONARIO')")
+   @PostMapping("/habilitar-idade")
    public ResponseEntity<List<Cidadao>> habilitarCidadaoIdade(@RequestBody Integer idade){
-	   List<Cidadao> cidadaosHabilitados = cidadaoService.findByIdade(idade);
+	   List<Cidadao> cidadaosHabilitados = cidadaoService.habilitarByIdade(idade);
 	   return new ResponseEntity<List<Cidadao>>(cidadaosHabilitados, HttpStatus.OK);
-	}*/
+	}
    
+   //@PreAuthorize("hasRole('ROLE_FUNCIONARIO	')")
    @PostMapping("/habilitar-comorbidade")
    public ResponseEntity<List<Cidadao>> habilitarCidadaoComorbidade(@RequestBody String comorbidade){
-	   List<Cidadao> cidadaosHabilitados = cidadaoService.findByComorbidade(comorbidade);
+	   List<Cidadao> cidadaosHabilitados = cidadaoService.habilitarByComorbidade(comorbidade);
 	   return new ResponseEntity<List<Cidadao>>(cidadaosHabilitados, HttpStatus.OK);
 	}
    
