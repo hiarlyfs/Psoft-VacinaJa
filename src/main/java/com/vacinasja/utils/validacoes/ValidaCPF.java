@@ -1,13 +1,13 @@
 package com.vacinasja.utils.validacoes;
 
-import com.vacinasja.error.verificacoes.VerificaCPF;
+import com.vacinasja.error.verificacoes_error.CPFInvalido;
 
 import java.util.InputMismatchException;
 
 
 public class ValidaCPF {
 
-    public ValidaCPF(String CPF) throws VerificaCPF {
+    public ValidaCPF(String CPF) throws CPFInvalido {
 
         if (CPF.equals("00000000000") ||
                 CPF.equals("11111111111") || CPF.isEmpty() ||
@@ -16,7 +16,7 @@ public class ValidaCPF {
                 CPF.equals("66666666666") || CPF.equals("77777777777") ||
                 CPF.equals("88888888888") || CPF.equals("99999999999") ||
                 (CPF.length() != 11))
-             throw new VerificaCPF(CPF);
+             throw new CPFInvalido(CPF);
 
         char dig10, dig11;
         int sm, i, r, num, peso;
@@ -52,9 +52,9 @@ public class ValidaCPF {
 
             if ((dig10 == CPF.charAt(9)) && (dig11 == CPF.charAt(10)))
                 return;
-            else throw new VerificaCPF(CPF);
+            else throw new CPFInvalido(CPF);
         } catch (InputMismatchException CPF_INVALIDO) {
-            throw new VerificaCPF(CPF);
+            throw new CPFInvalido(CPF);
         }
     }
 }
