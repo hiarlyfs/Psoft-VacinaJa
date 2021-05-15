@@ -2,8 +2,11 @@ package com.vacinasja.controller;
 
 import com.vacinasja.dto.cidadao.InsertCidadaoDto;
 import com.vacinasja.dto.cidadao.UpdateCidadaoDto;
+import com.vacinasja.dto.cidadao_vacina.CidadaoVacinacaoDto;
 import com.vacinasja.error.cidadao_error.CidadaoNaoEncontradoCartaoSus;
+import com.vacinasja.error.lotevacina_error.LoteVacinaInexistente;
 import com.vacinasja.error.tipo_login_error.TipoLoginInvalido;
+import com.vacinasja.error.vacina_error.VacinaInexistente;
 import com.vacinasja.model.Cidadao;
 import com.vacinasja.model.CidadaoVacinacao;
 import com.vacinasja.model.LoginCidadao;
@@ -38,7 +41,7 @@ public class CidadaoController {
         return new ResponseEntity<>(loginCidadao, HttpStatus.OK);
     }
 
-    @GetMapping("/estag	io")
+    @GetMapping("/estagio")
     public ResponseEntity<String> listaEstagioCidadao(Authentication authentication) throws CidadaoNaoEncontradoCartaoSus {
         String estagio = cidadaoService.listaEstagioCidadao(authentication.getName());
         return new ResponseEntity<>(estagio, HttpStatus.OK);
@@ -56,37 +59,32 @@ public class CidadaoController {
         return new ResponseEntity<>(cidadao, HttpStatus.OK);
     }
     
-  //  @PreAuthorize("hasRole('ROLE_FUNCIONARIO')")
+    @PreAuthorize("hasRole('ROLE_FUNCIONARIO')")
     @PostMapping("/registrar")
-    public ResponseEntity<CidadaoVacinacao> registrarVacina(@RequestBody CidadaoVacinacao cidadaoVacinacao) throws ParseException, TipoLoginInvalido {
+    public ResponseEntity<CidadaoVacinacao> registrarVacina(@RequestBody CidadaoVacinacaoDto cidadaoVacinacao) throws ParseException, TipoLoginInvalido, LoteVacinaInexistente, VacinaInexistente {
         CidadaoVacinacao registrarVacinacao = cidadaoService.registrarVacinacao(cidadaoVacinacao);
         return new ResponseEntity<>(registrarVacinacao, HttpStatus.OK);
     }
     
- //  @PreAuthorize("hasRole('ROLE_FUNCIONARIO')")
+   @PreAuthorize("hasRole('ROLE_FUNCIONARIO')")
    @PostMapping("/habilitar-profissao")
    public ResponseEntity<List<Cidadao>> habilitarCidadaoProfissao(@RequestBody String profissao){
 	   List<Cidadao> cidadaosHabilitados = cidadaoService.habilitarByProfissao(profissao);
 	   return new ResponseEntity<List<Cidadao>>(cidadaosHabilitados, HttpStatus.OK);
    }
    
-  // @PreAuthorize("hasRole('ROLE_FUNCIONARIO')")
+   @PreAuthorize("hasRole('ROLE_FUNCIONARIO')")
    @PostMapping("/habilitar-idade")
    public ResponseEntity<List<Cidadao>> habilitarCidadaoIdade(@RequestBody Integer idade){
 	   List<Cidadao> cidadaosHabilitados = cidadaoService.habilitarByIdade(idade);
 	   return new ResponseEntity<List<Cidadao>>(cidadaosHabilitados, HttpStatus.OK);
 	}
    
-   //@PreAuthorize("hasRole('ROLE_FUNCIONARIO	')")
+   @PreAuthorize("hasRole('ROLE_FUNCIONARIO	')")
    @PostMapping("/habilitar-comorbidade")
    public ResponseEntity<List<Cidadao>> habilitarCidadaoComorbidade(@RequestBody String comorbidade){
 	   List<Cidadao> cidadaosHabilitados = cidadaoService.habilitarByComorbidade(comorbidade);
 	   return new ResponseEntity<List<Cidadao>>(cidadaosHabilitados, HttpStatus.OK);
 	}
    
-	
-   
-	   
-
-    
 }

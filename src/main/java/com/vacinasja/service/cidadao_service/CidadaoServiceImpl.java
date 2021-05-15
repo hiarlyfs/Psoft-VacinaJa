@@ -2,17 +2,25 @@ package com.vacinasja.service.cidadao_service;
 
 import com.vacinasja.dto.cidadao.InsertCidadaoDto;
 import com.vacinasja.dto.cidadao.UpdateCidadaoDto;
+import com.vacinasja.dto.cidadao_vacina.CidadaoVacinacaoDto;
 import com.vacinasja.error.cidadao_error.CidadaoNaoEncontradoCartaoSus;
 import com.vacinasja.error.cidadao_error.CidadaoNaoEncontradoCpf;
+import com.vacinasja.error.lotevacina_error.LoteVacinaInexistente;
 import com.vacinasja.error.tipo_login_error.TipoLoginInvalido;
+import com.vacinasja.error.vacina_error.VacinaInexistente;
 import com.vacinasja.model.Cidadao;
 import com.vacinasja.model.CidadaoVacinacao;
 import com.vacinasja.model.LoginCidadao;
+import com.vacinasja.model.LoteVacina;
+import com.vacinasja.model.Vacina;
 import com.vacinasja.model.statecidadao.NaoHabilitado;
 import com.vacinasja.model.statecidadao.Tomou1Dose;
 import com.vacinasja.repository.CidadaoRepository;
 import com.vacinasja.repository.CidadaoVacinacaoRepository;
 import com.vacinasja.service.login_cidadao_service.LoginCidadaoService;
+import com.vacinasja.service.lote_vacina_service.LoteVacinaService;
+import com.vacinasja.service.vacina_service.VacinaService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.LocalDataSourceJobStore;
 import org.springframework.stereotype.Service;
@@ -34,9 +42,18 @@ public class CidadaoServiceImpl implements  CidadaoService{
     @Autowired
     CidadaoVacinacaoRepository cidadaoVacinacaoRepository;
     
+    @Autowired
+    LoteVacinaService loteService;
+    
 
     @Autowired
     LoginCidadaoService loginCidadaoService;
+
+    @Autowired
+    VacinaService vacinaService;
+    
+        
+
     
     @Override
     public LoginCidadao save(InsertCidadaoDto insertCidadaoDto) throws ParseException, TipoLoginInvalido {
@@ -94,10 +111,14 @@ public class CidadaoServiceImpl implements  CidadaoService{
     }
     
     @Override
-    public CidadaoVacinacao  registrarVacinacao(CidadaoVacinacao cidadaoVacinacao) throws ParseException, TipoLoginInvalido {
-        Date dataVacinacao = new SimpleDateFormat("yyyy-MM-dd").parse(cidadaoVacinacao.getDataVacinacao().toString());
-        CidadaoVacinacao novoRegistro= new CidadaoVacinacao(cidadaoVacinacao.getCpf(), dataVacinacao,
-                cidadaoVacinacao.getLote(), cidadaoVacinacao.getTipoVacina(), cidadaoVacinacao.getNumDose());
+    public CidadaoVacinacao  registrarVacinacao(CidadaoVacinacaoDto cidadaoVacinacaoDto) throws ParseException, TipoLoginInvalido, LoteVacinaInexistente, VacinaInexistente {
+        Date dataVacinacao = new SimpleDateFormat("yyyy-MM-dd").parse(cidadaoVacinacaoDto.getDataVacinacao().toString());
+        Vacina vacina = vacinaService.getVacinaById(cidadaoVacinacaoDto.getTipoVacina());
+        LoteVacina lote = loteService.getLoteVacinaById(cidadaoVacinacaoDto.getLote());
+        
+        
+        CidadaoVacinacao novoRegistro= new CidadaoVacinacao(cidadaoVacinacaoDto.getCpf(), dataVacinacao,
+                lote, vacina, cidadaoVacinacaoDto.getNumDose());
         cidadaoVacinacaoRepository.save(novoRegistro);
         return novoRegistro;
     }
