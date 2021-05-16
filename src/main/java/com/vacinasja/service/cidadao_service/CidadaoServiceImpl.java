@@ -9,6 +9,9 @@ import com.vacinasja.error.cidadao_error.CidadaoNaoHabilitado;
 import com.vacinasja.error.lotevacina_error.LoteVacinaInexistente;
 import com.vacinasja.error.tipo_login_error.TipoLoginInvalido;
 import com.vacinasja.error.vacina_error.VacinaInexistente;
+import com.vacinasja.error.verificacoes_error.CPFInvalido;
+import com.vacinasja.error.verificacoes_error.EmailInvalido;
+import com.vacinasja.error.verificacoes_error.TelefoneInvalido;
 import com.vacinasja.event.estado_vacinacao.EstadoVacinacaoAtualizadoEvent;
 import com.vacinasja.model.Cidadao;
 import com.vacinasja.model.CidadaoVacinacao;
@@ -21,6 +24,9 @@ import com.vacinasja.service.login_cidadao_service.LoginCidadaoService;
 import com.vacinasja.service.lote_vacina_service.LoteVacinaService;
 import com.vacinasja.service.vacina_service.VacinaService;
 
+import com.vacinasja.utils.validacoes.ValidaCPF;
+import com.vacinasja.utils.validacoes.ValidaEMAIL;
+import com.vacinasja.utils.validacoes.ValidaTelefone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -56,8 +62,11 @@ public class CidadaoServiceImpl implements  CidadaoService{
 	ApplicationEventPublisher applicationEventPublisher;
 
     @Override
-    public LoginCidadao save(InsertCidadaoDto insertCidadaoDto) throws ParseException, TipoLoginInvalido {
+    public LoginCidadao save(InsertCidadaoDto insertCidadaoDto) throws ParseException, TipoLoginInvalido, CPFInvalido, EmailInvalido, TelefoneInvalido {
         Date dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(insertCidadaoDto.getDataNascimento());
+        ValidaCPF.validaCPF(insertCidadaoDto.getCpf());
+        ValidaEMAIL.validaEMAIL(insertCidadaoDto.getEmail());
+        ValidaTelefone.validaTelefone(insertCidadaoDto.getTelefone());
         Cidadao novoCidadao = new Cidadao(insertCidadaoDto.getNomeCompleto(), insertCidadaoDto.getEndereco(),
                 insertCidadaoDto.getCpf(), insertCidadaoDto.getCartaoSus(), insertCidadaoDto.getEmail(), dataNascimento,
                 insertCidadaoDto.getTelefone(), insertCidadaoDto.getProfissao(), insertCidadaoDto.getCormobidades());
@@ -67,10 +76,10 @@ public class CidadaoServiceImpl implements  CidadaoService{
     
     
     @Override
-    public Cidadao update(String cartaoSus, UpdateCidadaoDto updateCidadaoDto) throws CidadaoNaoEncontradoCartaoSus {
+    public Cidadao update(String cartaoSus, UpdateCidadaoDto updateCidadaoDto) throws CidadaoNaoEncontradoCartaoSus, EmailInvalido, TelefoneInvalido {
         Cidadao cidadao = findByCartaoSus(cartaoSus);
-        // fazer validação de formato dos dados -> email / telefone / nome nao nulo
-
+        ValidaEMAIL.validaEMAIL(updateCidadaoDto.getEmail());
+        ValidaTelefone.validaTelefone(updateCidadaoDto.getTelefone());
         cidadao.setComorbidade(updateCidadaoDto.getCormobidades());
         cidadao.setEmail(updateCidadaoDto.getEmail());
         cidadao.setProfissao(updateCidadaoDto.getProfissao());

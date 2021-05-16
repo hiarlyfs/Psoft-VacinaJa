@@ -9,6 +9,9 @@ import com.vacinasja.error.cidadao_error.CidadaoNaoHabilitado;
 import com.vacinasja.error.lotevacina_error.LoteVacinaInexistente;
 import com.vacinasja.error.tipo_login_error.TipoLoginInvalido;
 import com.vacinasja.error.vacina_error.VacinaInexistente;
+import com.vacinasja.error.verificacoes_error.CPFInvalido;
+import com.vacinasja.error.verificacoes_error.EmailInvalido;
+import com.vacinasja.error.verificacoes_error.TelefoneInvalido;
 import com.vacinasja.model.Cidadao;
 import com.vacinasja.model.CidadaoVacinacao;
 import com.vacinasja.model.LoginCidadao;
@@ -32,7 +35,7 @@ public class CidadaoController {
     CidadaoService cidadaoService;
 
     @PostMapping("")
-    public ResponseEntity<LoginCidadao> save(@RequestBody InsertCidadaoDto insertCidadaoDto) throws ParseException, TipoLoginInvalido {
+    public ResponseEntity<LoginCidadao> save(@RequestBody InsertCidadaoDto insertCidadaoDto) throws ParseException, TipoLoginInvalido, EmailInvalido, TelefoneInvalido, CPFInvalido {
         LoginCidadao loginCidadao = cidadaoService.save(insertCidadaoDto);
 
         return new ResponseEntity<>(loginCidadao, HttpStatus.OK);
@@ -45,7 +48,7 @@ public class CidadaoController {
     }    
     
     @PutMapping("")
-    public ResponseEntity<Cidadao> atualizaCidadao(@RequestBody UpdateCidadaoDto updateCidadaoDto, Authentication authentication) throws CidadaoNaoEncontradoCartaoSus {
+    public ResponseEntity<Cidadao> atualizaCidadao(@RequestBody UpdateCidadaoDto updateCidadaoDto, Authentication authentication) throws CidadaoNaoEncontradoCartaoSus, EmailInvalido, TelefoneInvalido {
         Cidadao cidadao = cidadaoService.update(authentication.getName(), updateCidadaoDto);
         return new ResponseEntity<>(cidadao, HttpStatus.OK);
     }
