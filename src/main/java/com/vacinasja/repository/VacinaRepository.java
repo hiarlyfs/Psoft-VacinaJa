@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.vacinasja.model.Vacina;
 
 public interface VacinaRepository extends JpaRepository<Vacina, Long>{
-
+	
 }

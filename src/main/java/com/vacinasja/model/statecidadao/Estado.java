@@ -13,7 +13,11 @@ public abstract class Estado {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    public abstract Boolean tentaAlterar(Cidadao cidadao, Integer idade, String profissao, String comorbidade);
+    public abstract Boolean tentaAlterarByIdade(Cidadao cidadao, Integer idade);
+    public abstract Boolean tentaAlterarByProfissao(Cidadao cidadao, String profissao);
+    public abstract Boolean tentaAlterarByComorbidade(Cidadao cidadao, String comorbidade);
+    		
+
 
     public abstract boolean tentaAlterar(Cidadao cidadao, LocalDate data);
 

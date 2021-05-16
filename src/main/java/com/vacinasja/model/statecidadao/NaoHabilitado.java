@@ -10,14 +10,6 @@ import java.time.LocalDate;
 public class NaoHabilitado extends Estado {
 
     @Override
-    public Boolean tentaAlterar(Cidadao cidadao, Integer idade, String profissao, String comorbidade) {
-        if (cidadao.calculaIdade() >= idade || cidadao.getProfissao().equals(profissao) || cidadao.getComorbidade().contains(comorbidade)) {
-            cidadao.setNewEstagioVacinacao(new Habilitado1Dose());
-        }
-        return true;
-    }
-
-    @Override
     public boolean tentaAlterar(Cidadao cidadao, LocalDate data) { // faz nada, pois não tomou a dose.
         return false;
     }
@@ -36,4 +28,28 @@ public class NaoHabilitado extends Estado {
     public String toString() {
         return "Não habilitado para tomar a vacina";
     }
+
+	@Override
+	public Boolean tentaAlterarByIdade(Cidadao cidadao, Integer idade) {
+		if(cidadao.calculaIdade() >= idade) {
+			cidadao.setNewEstagioVacinacao(new Habilitado1Dose());
+		}
+		return true;
+	}
+
+	@Override
+	public Boolean tentaAlterarByProfissao(Cidadao cidadao, String profissao) {
+		if(cidadao.getProfissao() == profissao) {
+			cidadao.setNewEstagioVacinacao(new Habilitado1Dose());
+		}
+		return true;
+	}
+
+	@Override
+	public Boolean tentaAlterarByComorbidade(Cidadao cidadao, String comorbidade) {
+		if(cidadao.getComorbidade().contains((comorbidade))) {
+			cidadao.setNewEstagioVacinacao(new Habilitado1Dose());
+		}
+		return true;
+	}
 }
