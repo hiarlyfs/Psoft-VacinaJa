@@ -34,8 +34,6 @@ public class Agendamento {
 		this.horario = horario;
 	}
 
-
-
 	public Long getId() {
 		return id;
 	}

@@ -1,7 +1,6 @@
 package com.vacinasja.service.vacina_service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.vacinasja.dto.vacina.VacinaDto;
 import com.vacinasja.error.vacina_error.VacinaInexistente;

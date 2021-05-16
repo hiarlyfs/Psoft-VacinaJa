@@ -164,12 +164,10 @@ public class Cidadao {
         return estagioVacinacao.tentaAlterarByComorbidade(this, comorbidade);
     }
  
-    // a ser utilizado pela notificação de alteração diária do sistema (para habilitar para segunda dose quem tomou a primeira) // data = LocalDate.now()
     public Boolean passarEstagio(LocalDate data) {
         return estagioVacinacao.tentaAlterar(this, data);
     }
 
-    // a ser utilizado pelo funcionário para registrar a vacinação do paciente (só é realizado para cidadãos habilitados)
     public Boolean vacinar(Vacina vacina) {
         return estagioVacinacao.tentaAlterar(this, vacina);
     }
@@ -178,7 +176,6 @@ public class Cidadao {
         this.estagioVacinacao = newEstagioVacinacao;
     }
 
-    // usado para retornar o estágio atual de vacinação do cidadão
     public String getEstagioVacinacao() {
         return estagioVacinacao.toString();
     }

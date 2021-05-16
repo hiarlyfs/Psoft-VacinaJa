@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vacinasja.dto.agendamento.AgendamentoDto;
 import com.vacinasja.dto.agendamento.InsertAgendarDto;
-import com.vacinasja.dto.agendamento.ListAgendamentoDto;
 import com.vacinasja.error.agendamento_error.AgendamentoJaUtilizado;
 import com.vacinasja.error.agendamento_error.CidadaoEstadoNaoAgendavel;
 import com.vacinasja.error.agendamento_error.CidadaoJaAgendado;

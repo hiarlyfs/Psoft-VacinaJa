@@ -24,7 +24,6 @@ public class LoginFuncionario {
     @OneToOne(cascade = CascadeType.ALL)
     private StatusCadastro statusCadastro;
 
-
     public LoginFuncionario() {
     }
 

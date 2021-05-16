@@ -22,7 +22,7 @@ public interface CidadaoService {
     String listaEstagioCidadao(String cpf) throws CidadaoNaoEncontradoCartaoSus;
     Cidadao findByCpf(String cpf) throws CidadaoNaoEncontradoCpf;
     Cidadao findByCartaoSus(String cartaoSus) throws CidadaoNaoEncontradoCartaoSus;
-    CidadaoVacinacao registrarVacinacao(CidadaoVacinacaoDto cidadaoVacinacao) throws ParseException, TipoLoginInvalido, LoteVacinaInexistente, VacinaInexistente, CidadaoNaoEncontradoCpf, CidadaoNaoHabilitado;
+    CidadaoVacinacao registrarVacinacao(CidadaoVacinacaoDto cidadaoVacinacao) throws ParseException, LoteVacinaInexistente, VacinaInexistente, CidadaoNaoEncontradoCpf, CidadaoNaoHabilitado;
     List<Cidadao> habilitarByProfissao(String profissao);
     List<Cidadao> habilitarByComorbidade(String comorbidade);
     List<Cidadao> habilitarByIdade(Integer idade);

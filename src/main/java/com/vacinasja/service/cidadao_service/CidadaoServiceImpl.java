@@ -15,8 +15,6 @@ import com.vacinasja.model.CidadaoVacinacao;
 import com.vacinasja.model.LoginCidadao;
 import com.vacinasja.model.LoteVacina;
 import com.vacinasja.model.Vacina;
-import com.vacinasja.model.statecidadao.NaoHabilitado;
-import com.vacinasja.model.statecidadao.Tomou1Dose;
 import com.vacinasja.repository.CidadaoRepository;
 import com.vacinasja.repository.CidadaoVacinacaoRepository;
 import com.vacinasja.service.login_cidadao_service.LoginCidadaoService;
@@ -25,7 +23,6 @@ import com.vacinasja.service.vacina_service.VacinaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.scheduling.quartz.LocalDataSourceJobStore;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -57,10 +54,7 @@ public class CidadaoServiceImpl implements  CidadaoService{
     
     @Autowired
 	ApplicationEventPublisher applicationEventPublisher;
-    
-        
 
-    
     @Override
     public LoginCidadao save(InsertCidadaoDto insertCidadaoDto) throws ParseException, TipoLoginInvalido {
         Date dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(insertCidadaoDto.getDataNascimento());
@@ -102,7 +96,6 @@ public class CidadaoServiceImpl implements  CidadaoService{
         }
 
         return cidadao.get();
-
     }
 
     @Override
@@ -117,7 +110,7 @@ public class CidadaoServiceImpl implements  CidadaoService{
     }
     
     @Override
-    public CidadaoVacinacao  registrarVacinacao(CidadaoVacinacaoDto cidadaoVacinacaoDto) throws ParseException, TipoLoginInvalido, LoteVacinaInexistente, VacinaInexistente, CidadaoNaoEncontradoCpf, CidadaoNaoHabilitado {
+    public CidadaoVacinacao  registrarVacinacao(CidadaoVacinacaoDto cidadaoVacinacaoDto) throws ParseException, LoteVacinaInexistente, VacinaInexistente, CidadaoNaoEncontradoCpf, CidadaoNaoHabilitado {
         Date dataVacinacao = new SimpleDateFormat("yyyy-MM-dd").parse(cidadaoVacinacaoDto.getDataVacinacao().toString());
         Vacina vacina = vacinaService.getVacinaById(cidadaoVacinacaoDto.getTipoVacina());
         LoteVacina lote = loteService.getLoteVacinaById(cidadaoVacinacaoDto.getLote());

@@ -5,9 +5,7 @@ public class ListAgendamentoDto {
 	private String horario;
 	private String cartaoSUS;
 	
-	public ListAgendamentoDto() {
-		// TODO Auto-generated constructor stub
-	}
+	public ListAgendamentoDto() { }
 	
 	
 	public ListAgendamentoDto(String data, String horario, String cartaoSUS) {

@@ -7,8 +7,6 @@ import com.vacinasja.error.tipo_login_error.TipoLoginInvalido;
 import com.vacinasja.model.Login;
 import com.vacinasja.model.TipoLogin;
 import com.vacinasja.repository.LoginRepository;
-import com.vacinasja.security.JWTAuthenticationFilter;
-import com.vacinasja.service.funcionario_service.FuncionarioService;
 import com.vacinasja.service.login_funcionario_service.LoginFuncionarioService;
 import com.vacinasja.service.tipo_login_service.TipoLoginService;
 import com.vacinasja.service.token_authenticate_service.TokenAuthenticateService;

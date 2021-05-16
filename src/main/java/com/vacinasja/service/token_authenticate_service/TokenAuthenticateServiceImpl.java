@@ -1,7 +1,6 @@
 package com.vacinasja.service.token_authenticate_service;
 
 import com.vacinasja.model.Login;
-import com.vacinasja.model.LoginFuncionario;
 import com.vacinasja.service.login_funcionario_service.LoginFuncionarioService;
 import com.vacinasja.service.login_service.LoginService;
 import io.jsonwebtoken.Jwts;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 

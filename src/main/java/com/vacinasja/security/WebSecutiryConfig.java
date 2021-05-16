@@ -1,6 +1,5 @@
     package com.vacinasja.security;
 
-    import com.vacinasja.security.JWTAuthenticationFilter;
     import org.springframework.context.annotation.Configuration;
     import org.springframework.http.HttpMethod;
     import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;

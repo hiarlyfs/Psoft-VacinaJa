@@ -1,6 +1,5 @@
 package com.vacinasja.repository;
 
-import com.vacinasja.model.Funcionario;
 import com.vacinasja.model.Login;
 import com.vacinasja.model.LoginFuncionario;
 import com.vacinasja.model.StatusCadastro;

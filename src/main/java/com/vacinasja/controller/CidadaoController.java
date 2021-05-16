@@ -12,8 +12,6 @@ import com.vacinasja.error.vacina_error.VacinaInexistente;
 import com.vacinasja.model.Cidadao;
 import com.vacinasja.model.CidadaoVacinacao;
 import com.vacinasja.model.LoginCidadao;
-import com.vacinasja.model.statecidadao.NaoHabilitado;
-import com.vacinasja.model.statecidadao.Tomou1Dose;
 import com.vacinasja.service.cidadao_service.CidadaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,9 +21,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -63,7 +58,7 @@ public class CidadaoController {
     
     @PreAuthorize("hasRole('ROLE_FUNCIONARIO')")
     @PostMapping("/registrar")
-    public ResponseEntity<CidadaoVacinacao> registrarVacina(@RequestBody CidadaoVacinacaoDto cidadaoVacinacao) throws ParseException, TipoLoginInvalido, LoteVacinaInexistente, VacinaInexistente, CidadaoNaoEncontradoCpf, CidadaoNaoHabilitado {
+    public ResponseEntity<CidadaoVacinacao> registrarVacina(@RequestBody CidadaoVacinacaoDto cidadaoVacinacao) throws ParseException, LoteVacinaInexistente, VacinaInexistente, CidadaoNaoEncontradoCpf, CidadaoNaoHabilitado {
         CidadaoVacinacao registrarVacinacao = cidadaoService.registrarVacinacao(cidadaoVacinacao);
         return new ResponseEntity<>(registrarVacinacao, HttpStatus.OK);
     }
@@ -82,7 +77,7 @@ public class CidadaoController {
 	   return new ResponseEntity<List<Cidadao>>(cidadaosHabilitados, HttpStatus.OK);
 	}
    
-   @PreAuthorize("hasRole('ROLE_FUNCIONARIO	')")
+   @PreAuthorize("hasRole('ROLE_FUNCIONARIO')")
    @PostMapping("/habilitar-comorbidade")
    public ResponseEntity<List<Cidadao>> habilitarCidadaoComorbidade(@RequestBody String comorbidade){
 	   List<Cidadao> cidadaosHabilitados = cidadaoService.habilitarByComorbidade(comorbidade);

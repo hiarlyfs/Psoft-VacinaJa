@@ -3,7 +3,6 @@ package com.vacinasja.controller;
 import com.vacinasja.dto.login.LoginDto;
 import com.vacinasja.error.login_error.AguardandoAprovacao;
 import com.vacinasja.error.login_error.LoginInvalido;
-import com.vacinasja.error.tipo_login_error.TipoLoginInvalido;
 import com.vacinasja.service.login_service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

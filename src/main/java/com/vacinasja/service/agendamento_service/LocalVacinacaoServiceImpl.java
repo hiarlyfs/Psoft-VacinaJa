@@ -13,7 +13,6 @@ import com.vacinasja.dto.agendamento.InsertLocalVacinacaoDto;
 import com.vacinasja.dto.agendamento.ListAgendamentoDto;
 import com.vacinasja.dto.agendamento.LocalVacinacaoDto;
 import com.vacinasja.error.local_vacinacao_error.LocalVacinacaoNaoEncontradoId;
-import com.vacinasja.error.local_vacinacao_error.LocalVacinacaoNaoEncontradoNomeLocal;
 import com.vacinasja.model.Agendamento;
 import com.vacinasja.model.HorarioVacinacao;
 import com.vacinasja.model.LocalVacinacao;
