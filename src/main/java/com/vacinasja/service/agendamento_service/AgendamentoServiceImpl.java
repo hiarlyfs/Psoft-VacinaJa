@@ -53,10 +53,10 @@ public class AgendamentoServiceImpl implements AgendamentoService {
 	public AgendamentoDto agendar(String cartaoSUS, InsertAgendarDto agendarDto) throws HorarioVacinacaoNaoEncontrado, CidadaoNaoEncontradoCartaoSus, LocalVacinacaoNaoEncontradoId, ParseException, CidadaoEstadoNaoAgendavel, CidadaoJaAgendado, AgendamentoJaUtilizado, DataAgendamentoNaoAceita, CidadaoSemAgendamentos {
 		Date dataAgendamento = new SimpleDateFormat("yyyy-MM-dd").parse(agendarDto.getDataAgendamento());
 		
-		verificaDataAgendamento(dataAgendamento);
-		
 		Optional<HorarioVacinacao> optionalHorario = horarioVacinacaoRepository.findById(agendarDto.getHorarioId());
 		if (!optionalHorario.isPresent()) throw new HorarioVacinacaoNaoEncontrado(agendarDto.getHorarioId());
+		
+		verificaDataAgendamento(dataAgendamento, optionalHorario.get());
 		
 		Optional<LocalVacinacao> optionalLocalVacinacao = localVacinacaoRepository.findById(agendarDto.getLocalVacinacaoId());
 		if(!optionalLocalVacinacao.isPresent()) throw new LocalVacinacaoNaoEncontradoId(agendarDto.getLocalVacinacaoId());
@@ -75,13 +75,14 @@ public class AgendamentoServiceImpl implements AgendamentoService {
 		return getAgendamentoByCidadao(cidadao);
 	}
 	
-	private void verificaDataAgendamento(Date data) throws DataAgendamentoNaoAceita {
+	private void verificaDataAgendamento(Date data, HorarioVacinacao horarioVacinacao) throws DataAgendamentoNaoAceita {
 		LocalDate dataAgendamento = data.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		
 		ZoneId zid = ZoneId.of("America/Sao_Paulo");
 		LocalDate hoje = LocalDate.now(zid);
 		
-		if (!hoje.isBefore(dataAgendamento)) throw new DataAgendamentoNaoAceita();
+		if (hoje.isAfter(dataAgendamento)) throw new DataAgendamentoNaoAceita();
+		if (!hoje.isBefore(dataAgendamento) && horarioVacinacao.ehAntes(data)) throw new DataAgendamentoNaoAceita();
 	}
 	
 	private void verificaCidadaoEstado(Cidadao cidadao) throws CidadaoEstadoNaoAgendavel {
