@@ -7,7 +7,7 @@ import java.util.InputMismatchException;
 
 public class ValidaCPF {
 
-    public ValidaCPF(String CPF) throws CPFInvalido {
+    public static void validaCPF(String CPF) throws CPFInvalido {
 
         if (CPF.equals("00000000000") ||
                 CPF.equals("11111111111") || CPF.isEmpty() ||
