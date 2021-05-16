@@ -40,7 +40,7 @@ public class LocalVacinacaoController {
 		return new ResponseEntity<LocalVacinacao>(novoLocal, HttpStatus.CREATED);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')") 
+	@PreAuthorize("hasRole('ROLE_CIDADAO') OR hasRole('ROLE_FUNCIONARIO') OR hasRole('ROLE_ADMIN')") 
 	@GetMapping("/all")
 	public ResponseEntity<List<LocalVacinacaoDto>> getAllLocais() {
 		List<LocalVacinacaoDto> locais = localVacinacaoService.findAll();

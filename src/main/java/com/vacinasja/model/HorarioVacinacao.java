@@ -1,5 +1,9 @@
 package com.vacinasja.model;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,6 +30,22 @@ public class HorarioVacinacao {
 
 	public String getHora() {
 		return hora;
+	}
+	
+	public boolean jaPassou() {
+		String[] entrada = hora.split(":");
+		int hora1 = Integer.parseInt(entrada[0]);
+		int min1 = Integer.parseInt(entrada[1]);
+
+		ZoneId zid = ZoneId.of("America/Sao_Paulo");
+		LocalDateTime hojeLocal = LocalDateTime.now(zid);
+		
+		int hora2 = hojeLocal.getHour();
+		int min2 = hojeLocal.getMinute();
+		
+		int total1 = min1 + hora1*60;
+		int total2 = min2 + hora2*60;
+		return total1 > total2;
 	}
     
     
