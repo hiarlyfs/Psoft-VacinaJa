@@ -33,23 +33,26 @@ public class NaoHabilitado extends Estado {
 	public Boolean tentaAlterarByIdade(Cidadao cidadao, Integer idade) {
 		if(cidadao.calculaIdade() >= idade) {
 			cidadao.setNewEstagioVacinacao(new Habilitado1Dose());
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	@Override
 	public Boolean tentaAlterarByProfissao(Cidadao cidadao, String profissao) {
-		if(cidadao.getProfissao() == profissao) {
+		if(cidadao.getProfissao().equals(profissao)) {
 			cidadao.setNewEstagioVacinacao(new Habilitado1Dose());
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	@Override
 	public Boolean tentaAlterarByComorbidade(Cidadao cidadao, String comorbidade) {
 		if(cidadao.getComorbidade().contains((comorbidade))) {
 			cidadao.setNewEstagioVacinacao(new Habilitado1Dose());
+			return true;
 		}
-		return true;
+		return false;
 	}
 }
