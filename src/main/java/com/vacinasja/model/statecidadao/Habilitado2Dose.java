@@ -17,7 +17,7 @@ public class Habilitado2Dose extends Estado {
 
     @Override
     public Boolean tentaAlterar(Cidadao cidadao, Vacina vacina) {
-        if (cidadao.pegaFabricanteVacina().equals(vacina.getFabricante())) {
+        if (cidadao.pegaFabricanteVacina().equals(vacina.getFabricante()) && cidadao.pegaIntervaloDoses().equals(vacina.getIntervaloDoses())) {
             cidadao.setNewEstagioVacinacao(new Vacinado());
         return true;
         } else {
