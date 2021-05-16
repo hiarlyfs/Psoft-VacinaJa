@@ -22,6 +22,7 @@ public class Habilitado1Dose extends Estado {
             cidadao.setIntervaloDoses(vacina.getIntervaloDoses());
             cidadao.setDiaTomouDose(new Date());
             cidadao.setNewEstagioVacinacao(new Tomou1Dose());
+            cidadao.setFabricanteVacina(vacina.getFabricante());
         } else
             cidadao.setNewEstagioVacinacao(new Vacinado());
         return true;

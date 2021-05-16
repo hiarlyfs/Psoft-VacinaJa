@@ -51,6 +51,7 @@ public class Cidadao {
     @Temporal(TemporalType.DATE)
     private Date diaTomouDose;
     private Integer intervaloDoses;
+    private String fabricanteVacina;
 
     public Cidadao() {
 
@@ -143,6 +144,13 @@ public class Cidadao {
         return estagioVacinacao.getIntEstado();
     }
 
+    public void setFabricanteVacina(String fabricante) {
+        this.fabricanteVacina = fabricante;
+    }
+
+    public String pegaFabricanteVacina() {
+        return fabricanteVacina;
+    }
 
     public Boolean passarEstagioByIdade(Integer idade) {
         return estagioVacinacao.tentaAlterarByIdade(this, idade);
