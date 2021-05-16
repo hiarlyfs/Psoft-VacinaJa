@@ -5,6 +5,7 @@ import com.vacinasja.dto.cidadao.UpdateCidadaoDto;
 import com.vacinasja.dto.cidadao_vacina.CidadaoVacinacaoDto;
 import com.vacinasja.error.cidadao_error.CidadaoNaoEncontradoCartaoSus;
 import com.vacinasja.error.cidadao_error.CidadaoNaoEncontradoCpf;
+import com.vacinasja.error.cidadao_error.CidadaoNaoHabilitado;
 import com.vacinasja.error.lotevacina_error.LoteVacinaInexistente;
 import com.vacinasja.error.tipo_login_error.TipoLoginInvalido;
 import com.vacinasja.error.vacina_error.VacinaInexistente;
@@ -116,16 +117,20 @@ public class CidadaoServiceImpl implements  CidadaoService{
     }
     
     @Override
-    public CidadaoVacinacao  registrarVacinacao(CidadaoVacinacaoDto cidadaoVacinacaoDto) throws ParseException, TipoLoginInvalido, LoteVacinaInexistente, VacinaInexistente {
+    public CidadaoVacinacao  registrarVacinacao(CidadaoVacinacaoDto cidadaoVacinacaoDto) throws ParseException, TipoLoginInvalido, LoteVacinaInexistente, VacinaInexistente, CidadaoNaoEncontradoCpf, CidadaoNaoHabilitado {
         Date dataVacinacao = new SimpleDateFormat("yyyy-MM-dd").parse(cidadaoVacinacaoDto.getDataVacinacao().toString());
         Vacina vacina = vacinaService.getVacinaById(cidadaoVacinacaoDto.getTipoVacina());
         LoteVacina lote = loteService.getLoteVacinaById(cidadaoVacinacaoDto.getLote());
-        
-        
         CidadaoVacinacao novoRegistro= new CidadaoVacinacao(cidadaoVacinacaoDto.getCpf(), dataVacinacao,
                 lote, vacina, cidadaoVacinacaoDto.getNumDose());
-        cidadaoVacinacaoRepository.save(novoRegistro);
-        return novoRegistro;
+        Cidadao cidadao = findByCpf(cidadaoVacinacaoDto.getCpf());
+        if (cidadao.vacinar(vacina)) {
+            cidadaoRepository.save(cidadao);
+            cidadaoVacinacaoRepository.save(novoRegistro);
+            return novoRegistro;
+        } else {
+            throw new CidadaoNaoHabilitado(cidadao.getNome());
+        }
     }
     
     

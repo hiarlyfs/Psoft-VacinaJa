@@ -5,6 +5,7 @@ import com.vacinasja.dto.cidadao.UpdateCidadaoDto;
 import com.vacinasja.dto.cidadao_vacina.CidadaoVacinacaoDto;
 import com.vacinasja.error.cidadao_error.CidadaoNaoEncontradoCartaoSus;
 import com.vacinasja.error.cidadao_error.CidadaoNaoEncontradoCpf;
+import com.vacinasja.error.cidadao_error.CidadaoNaoHabilitado;
 import com.vacinasja.error.lotevacina_error.LoteVacinaInexistente;
 import com.vacinasja.error.tipo_login_error.TipoLoginInvalido;
 import com.vacinasja.error.vacina_error.VacinaInexistente;
@@ -21,7 +22,7 @@ public interface CidadaoService {
     String listaEstagioCidadao(String cpf) throws CidadaoNaoEncontradoCartaoSus;
     Cidadao findByCpf(String cpf) throws CidadaoNaoEncontradoCpf;
     Cidadao findByCartaoSus(String cartaoSus) throws CidadaoNaoEncontradoCartaoSus;
-    CidadaoVacinacao registrarVacinacao(CidadaoVacinacaoDto cidadaoVacinacao) throws ParseException, TipoLoginInvalido, LoteVacinaInexistente, VacinaInexistente;
+    CidadaoVacinacao registrarVacinacao(CidadaoVacinacaoDto cidadaoVacinacao) throws ParseException, TipoLoginInvalido, LoteVacinaInexistente, VacinaInexistente, CidadaoNaoEncontradoCpf, CidadaoNaoHabilitado;
     List<Cidadao> habilitarByProfissao(String profissao);
     List<Cidadao> habilitarByComorbidade(String comorbidade);
     List<Cidadao> habilitarByIdade(Integer idade);

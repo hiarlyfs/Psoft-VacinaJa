@@ -4,6 +4,8 @@ import com.vacinasja.dto.cidadao.InsertCidadaoDto;
 import com.vacinasja.dto.cidadao.UpdateCidadaoDto;
 import com.vacinasja.dto.cidadao_vacina.CidadaoVacinacaoDto;
 import com.vacinasja.error.cidadao_error.CidadaoNaoEncontradoCartaoSus;
+import com.vacinasja.error.cidadao_error.CidadaoNaoEncontradoCpf;
+import com.vacinasja.error.cidadao_error.CidadaoNaoHabilitado;
 import com.vacinasja.error.lotevacina_error.LoteVacinaInexistente;
 import com.vacinasja.error.tipo_login_error.TipoLoginInvalido;
 import com.vacinasja.error.vacina_error.VacinaInexistente;
@@ -61,7 +63,7 @@ public class CidadaoController {
     
     @PreAuthorize("hasRole('ROLE_FUNCIONARIO')")
     @PostMapping("/registrar")
-    public ResponseEntity<CidadaoVacinacao> registrarVacina(@RequestBody CidadaoVacinacaoDto cidadaoVacinacao) throws ParseException, TipoLoginInvalido, LoteVacinaInexistente, VacinaInexistente {
+    public ResponseEntity<CidadaoVacinacao> registrarVacina(@RequestBody CidadaoVacinacaoDto cidadaoVacinacao) throws ParseException, TipoLoginInvalido, LoteVacinaInexistente, VacinaInexistente, CidadaoNaoEncontradoCpf, CidadaoNaoHabilitado {
         CidadaoVacinacao registrarVacinacao = cidadaoService.registrarVacinacao(cidadaoVacinacao);
         return new ResponseEntity<>(registrarVacinacao, HttpStatus.OK);
     }
