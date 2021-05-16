@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
@@ -82,7 +83,8 @@ public class AgendamentoServiceImpl implements AgendamentoService {
 		LocalDate hoje = LocalDate.now(zid);
 		
 		if (hoje.isAfter(dataAgendamento)) throw new DataAgendamentoNaoAceita();
-		if (!hoje.isBefore(dataAgendamento) && horarioVacinacao.ehAntes(data)) throw new DataAgendamentoNaoAceita();
+		// Verifica se nao eh antes, entao eh no mesmo dia, e se o horario escolhido eh depois do horario atual.
+		if (!hoje.isBefore(dataAgendamento) && !horarioVacinacao.jaPassou()) throw new DataAgendamentoNaoAceita();
 	}
 	
 	private void verificaCidadaoEstado(Cidadao cidadao) throws CidadaoEstadoNaoAgendavel {

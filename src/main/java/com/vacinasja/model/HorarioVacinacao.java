@@ -32,7 +32,7 @@ public class HorarioVacinacao {
 		return hora;
 	}
 	
-	public boolean ehAntes(Date data1) {
+	public boolean jaPassou() {
 		String[] entrada = hora.split(":");
 		int hora1 = Integer.parseInt(entrada[0]);
 		int min1 = Integer.parseInt(entrada[1]);
@@ -45,7 +45,7 @@ public class HorarioVacinacao {
 		
 		int total1 = min1 + hora1*60;
 		int total2 = min2 + hora2*60;
-		return total2 > total1;
+		return total1 > total2;
 	}
     
     
