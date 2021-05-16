@@ -61,10 +61,13 @@ public class CidadaoServiceImpl implements CidadaoService {
 	@Autowired
 	ApplicationEventPublisher applicationEventPublisher;
 
-
 	@Override
-	public LoginCidadao save(InsertCidadaoDto insertCidadaoDto) throws ParseException, TipoLoginInvalido {
+	public LoginCidadao save(InsertCidadaoDto insertCidadaoDto)
+			throws ParseException, TipoLoginInvalido, CPFInvalido, EmailInvalido, TelefoneInvalido {
 		Date dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(insertCidadaoDto.getDataNascimento());
+		ValidaCPF.validaCPF(insertCidadaoDto.getCpf());
+		ValidaEMAIL.validaEMAIL(insertCidadaoDto.getEmail());
+		ValidaTelefone.validaTelefone(insertCidadaoDto.getTelefone());
 		Cidadao novoCidadao = new Cidadao(insertCidadaoDto.getNomeCompleto(), insertCidadaoDto.getEndereco(),
 				insertCidadaoDto.getCpf(), insertCidadaoDto.getCartaoSus(), insertCidadaoDto.getEmail(), dataNascimento,
 				insertCidadaoDto.getTelefone(), insertCidadaoDto.getProfissao(), insertCidadaoDto.getCormobidades());
@@ -73,10 +76,11 @@ public class CidadaoServiceImpl implements CidadaoService {
 	}
 
 	@Override
-	public Cidadao update(String cartaoSus, UpdateCidadaoDto updateCidadaoDto) throws CidadaoNaoEncontradoCartaoSus {
+	public Cidadao update(String cartaoSus, UpdateCidadaoDto updateCidadaoDto)
+			throws CidadaoNaoEncontradoCartaoSus, EmailInvalido, TelefoneInvalido {
 		Cidadao cidadao = findByCartaoSus(cartaoSus);
-		// fazer validação de formato dos dados -> email / telefone / nome nao nulo
-
+		ValidaEMAIL.validaEMAIL(updateCidadaoDto.getEmail());
+		ValidaTelefone.validaTelefone(updateCidadaoDto.getTelefone());
 		cidadao.setComorbidade(updateCidadaoDto.getCormobidades());
 		cidadao.setEmail(updateCidadaoDto.getEmail());
 		cidadao.setProfissao(updateCidadaoDto.getProfissao());
@@ -107,95 +111,6 @@ public class CidadaoServiceImpl implements CidadaoService {
 	@Override
 	public Cidadao findByCartaoSus(String cartaoSus) throws CidadaoNaoEncontradoCartaoSus {
 		Optional<Cidadao> cidadao = cidadaoRepository.findByCartaoSus(cartaoSus);
-
-    @Override
-    public LoginCidadao save(InsertCidadaoDto insertCidadaoDto) throws ParseException, TipoLoginInvalido, CPFInvalido, EmailInvalido, TelefoneInvalido {
-        Date dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(insertCidadaoDto.getDataNascimento());
-        ValidaCPF.validaCPF(insertCidadaoDto.getCpf());
-        ValidaEMAIL.validaEMAIL(insertCidadaoDto.getEmail());
-        ValidaTelefone.validaTelefone(insertCidadaoDto.getTelefone());
-        Cidadao novoCidadao = new Cidadao(insertCidadaoDto.getNomeCompleto(), insertCidadaoDto.getEndereco(),
-                insertCidadaoDto.getCpf(), insertCidadaoDto.getCartaoSus(), insertCidadaoDto.getEmail(), dataNascimento,
-                insertCidadaoDto.getTelefone(), insertCidadaoDto.getProfissao(), insertCidadaoDto.getCormobidades());
-        cidadaoRepository.save(novoCidadao);
-        return loginCidadaoService.criarLoginCidadao(novoCidadao);
-    }
-    
-    
-    @Override
-    public Cidadao update(String cartaoSus, UpdateCidadaoDto updateCidadaoDto) throws CidadaoNaoEncontradoCartaoSus, EmailInvalido, TelefoneInvalido {
-        Cidadao cidadao = findByCartaoSus(cartaoSus);
-        ValidaEMAIL.validaEMAIL(updateCidadaoDto.getEmail());
-        ValidaTelefone.validaTelefone(updateCidadaoDto.getTelefone());
-        cidadao.setComorbidade(updateCidadaoDto.getCormobidades());
-        cidadao.setEmail(updateCidadaoDto.getEmail());
-        cidadao.setProfissao(updateCidadaoDto.getProfissao());
-        cidadao.setTelefone(updateCidadaoDto.getTelefone());
-        cidadao.setEndereco(updateCidadaoDto.getEndereco());
-        cidadao.setNome(updateCidadaoDto.getNomeCompleto());
-        cidadaoRepository.save(cidadao);
-
-        return cidadao;
-    }
-
-    public String listaEstagioCidadao(String cartaoSus) throws CidadaoNaoEncontradoCartaoSus {
-        Cidadao cidadao = findByCartaoSus(cartaoSus);
-        return cidadao.getEstagioVacinacao(); // String de representação do estágio como na especificação.
-    }
-
-    @Override
-    public Cidadao findByCpf(String cpf) throws CidadaoNaoEncontradoCpf {
-        Optional<Cidadao> cidadao = cidadaoRepository.findByCpf(cpf);
-
-        if (!cidadao.isPresent()) {
-            throw new CidadaoNaoEncontradoCpf(cpf);
-        }
-
-        return cidadao.get();
-    }
-
-    @Override
-    public Cidadao findByCartaoSus(String cartaoSus) throws CidadaoNaoEncontradoCartaoSus {
-        Optional<Cidadao> cidadao = cidadaoRepository.findByCartaoSus(cartaoSus);
-
-        if (!cidadao.isPresent()) {
-            throw new CidadaoNaoEncontradoCartaoSus(cartaoSus);
-        }
-
-        return cidadao.get();
-    }
-    
-    @Override
-    public CidadaoVacinacao  registrarVacinacao(CidadaoVacinacaoDto cidadaoVacinacaoDto) throws ParseException, LoteVacinaInexistente, VacinaInexistente, CidadaoNaoEncontradoCpf, CidadaoNaoHabilitado {
-        Date dataVacinacao = new SimpleDateFormat("yyyy-MM-dd").parse(cidadaoVacinacaoDto.getDataVacinacao().toString());
-        Vacina vacina = vacinaService.getVacinaById(cidadaoVacinacaoDto.getTipoVacina());
-        LoteVacina lote = loteService.getLoteVacinaById(cidadaoVacinacaoDto.getLote());
-        CidadaoVacinacao novoRegistro= new CidadaoVacinacao(cidadaoVacinacaoDto.getCpf(), dataVacinacao,
-                lote, vacina, cidadaoVacinacaoDto.getNumDose());
-        Cidadao cidadao = findByCpf(cidadaoVacinacaoDto.getCpf());
-        if (cidadao.vacinar(vacina)) {
-            cidadaoRepository.save(cidadao);
-            cidadaoVacinacaoRepository.save(novoRegistro);
-            return novoRegistro;
-        } else {
-            throw new CidadaoNaoHabilitado(cidadao.getNome());
-        }
-    }
-    
-    
-    @Override
-    public List<Cidadao> habilitarByProfissao(String profissao) {
-        List<Cidadao> cidadaos = cidadaoRepository.findByProfissao(profissao);
-        
-        for (Cidadao cidadao : cidadaos) {
-        	if(cidadao.passarEstagioByProfissao(profissao)) {
-        		cidadaoRepository.save(cidadao);
-        		applicationEventPublisher.publishEvent(new EstadoVacinacaoAtualizadoEvent(cidadao));
-        	}
-        }
-        
-        return cidadaos;
-    }
 
 		if (!cidadao.isPresent()) {
 			throw new CidadaoNaoEncontradoCartaoSus(cartaoSus);
@@ -254,7 +169,7 @@ public class CidadaoServiceImpl implements CidadaoService {
 		List<LoteVacina> numLotes = loteService.allLotesVacina();
 		List<Cidadao> cidadaosHabilitados = new ArrayList<Cidadao>();
 		int numDoses = 0;
-		
+
 		for (LoteVacina lotes : numLotes) {
 			numDoses += lotes.getQtdDoses();
 		}
@@ -283,7 +198,7 @@ public class CidadaoServiceImpl implements CidadaoService {
 		List<LoteVacina> numLotes = loteService.allLotesVacina();
 		List<Cidadao> cidadaosHabilitados = new ArrayList<Cidadao>();
 		int numDoses = 0;
-		
+
 		for (LoteVacina lotes : numLotes) {
 			numDoses += lotes.getQtdDoses();
 		}
