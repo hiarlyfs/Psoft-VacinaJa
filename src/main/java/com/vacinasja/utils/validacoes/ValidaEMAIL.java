@@ -2,10 +2,19 @@ package com.vacinasja.utils.validacoes;
 
 import com.vacinasja.error.verificacoes_error.EmailInvalido;
 
-public class ValidaEMAIL {
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-    public ValidaEMAIL(String email) throws EmailInvalido {
-        if (email.isEmpty() || !(email.contains("@")) || !(email.contains("."))) throw new EmailInvalido(email);
+public class ValidaEMAIL {
+    private static final String EMAIL_PATTERN =
+            "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+    private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN, Pattern.CASE_INSENSITIVE);
+
+    public static void validaEMAIL(String email) throws EmailInvalido {
+        Matcher matcher = pattern.matcher(email);
+        if (!matcher.matches()) throw new EmailInvalido(email);
     }
 
 }
