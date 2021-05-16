@@ -44,7 +44,7 @@ public class LoginFuncionarioServiceImpl implements LoginFuncionarioService{
     public void checkAuthorizeToLogin(Login login) throws AguardandoAprovacao {
         LoginFuncionario loginFuncionario = findByLogin(login);
 
-        if (loginFuncionario.getStatusCadastro() != "CONFIRMADO") {
+        if (!loginFuncionario.getStatusCadastro().equals("CONFIRMADO")) {
             throw new AguardandoAprovacao();
         }
     }

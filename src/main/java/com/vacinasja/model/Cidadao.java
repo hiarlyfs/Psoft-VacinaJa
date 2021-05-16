@@ -139,6 +139,14 @@ public class Cidadao {
         return intervaloDoses;
     }
 
+    public int pegaIntEstado() {
+        return estagioVacinacao.getIntEstado();
+    }
+
+    // a ser utilizado pela notificação de alteração do funcionário (para habilitar não habilitados)
+    public Boolean passarEstagio(Integer idade, String profissao, String comorbidade) {
+        return estagioVacinacao.tentaAlterar(this, idade, profissao, comorbidade);
+    }
 
     public Boolean passarEstagioByIdade(Integer idade) {
         return estagioVacinacao.tentaAlterarByIdade(this, idade);
@@ -148,13 +156,10 @@ public class Cidadao {
         return estagioVacinacao.tentaAlterarByProfissao(this, profissao);
     }
     
-    
     public Boolean passarEstagioByComorbidade(String comorbidade) {
         return estagioVacinacao.tentaAlterarByComorbidade(this, comorbidade);
     }
  
-    
-    
     // a ser utilizado pela notificação de alteração diária do sistema (para habilitar para segunda dose quem tomou a primeira) // data = LocalDate.now()
     public Boolean passarEstagio(LocalDate data) {
         return estagioVacinacao.tentaAlterar(this, data);
@@ -175,19 +180,19 @@ public class Cidadao {
     }
 
     public String getEmail() {
-		return email;
-	}
+	    	return email;
+  	}
     
     public String getNome() {
-		return nome;
-	}
+		    return nome;
+  	}
 
-	public String getCartaoSus() {
+	  public String getCartaoSus() {
         return cartaoSus;
     }
 	
-	public Estado getEstadoVacinacao() {
-		return estagioVacinacao;
-	}
+  	public Estado getEstadoVacinacao() {
+	  	return estagioVacinacao;
+  	}
 	
 }

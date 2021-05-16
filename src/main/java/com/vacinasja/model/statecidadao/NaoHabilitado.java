@@ -20,6 +20,11 @@ public class NaoHabilitado extends Estado {
     }
 
     @Override
+    public int getIntEstado() {
+        return 1;
+    }
+
+    @Override
     public String toString() {
         return "Não habilitado para tomar a vacina";
     }

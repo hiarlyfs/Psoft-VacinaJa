@@ -28,6 +28,11 @@ public class Tomou1Dose extends Estado {
     }
 
     @Override
+    public int getIntEstado() {
+        return 3;
+    }
+
+    @Override
     public String toString() {
         return "Esperando a 2o dose";
     }
