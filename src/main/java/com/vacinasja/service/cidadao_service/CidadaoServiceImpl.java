@@ -8,6 +8,7 @@ import com.vacinasja.error.cidadao_error.CidadaoNaoEncontradoCpf;
 import com.vacinasja.error.lotevacina_error.LoteVacinaInexistente;
 import com.vacinasja.error.tipo_login_error.TipoLoginInvalido;
 import com.vacinasja.error.vacina_error.VacinaInexistente;
+import com.vacinasja.event.estado_vacinacao.EstadoVacinacaoAtualizadoEvent;
 import com.vacinasja.model.Cidadao;
 import com.vacinasja.model.CidadaoVacinacao;
 import com.vacinasja.model.LoginCidadao;
@@ -22,6 +23,7 @@ import com.vacinasja.service.lote_vacina_service.LoteVacinaService;
 import com.vacinasja.service.vacina_service.VacinaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.quartz.LocalDataSourceJobStore;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +53,9 @@ public class CidadaoServiceImpl implements  CidadaoService{
 
     @Autowired
     VacinaService vacinaService;
+    
+    @Autowired
+	ApplicationEventPublisher applicationEventPublisher;
     
         
 
@@ -129,14 +134,12 @@ public class CidadaoServiceImpl implements  CidadaoService{
         List<Cidadao> cidadaos = cidadaoRepository.findByProfissao(profissao);
         
         for (Cidadao cidadao : cidadaos) {
-        	System.out.println(cidadao);
- 		   if (cidadao.getEstadoVacinacao()  instanceof NaoHabilitado) {
- 			   cidadao.passarEstagioByProfissao(profissao);   
- 		   } else if (cidadao.getEstadoVacinacao() instanceof Tomou1Dose) {
- 			   LocalDate dataAtual = LocalDate.now();			   
- 			   cidadao.passarEstagio(dataAtual);
- 		   }
+        	if(cidadao.passarEstagioByProfissao(profissao)) {
+        		cidadaoRepository.save(cidadao);
+        		applicationEventPublisher.publishEvent(new EstadoVacinacaoAtualizadoEvent(cidadao));
+        	}
         }
+        
         return cidadaos;
     }
 
@@ -145,13 +148,12 @@ public class CidadaoServiceImpl implements  CidadaoService{
 	public List<Cidadao> habilitarByComorbidade(String comorbidade) {
 		List<Cidadao> cidadaos = cidadaoRepository.findByComorbidade(comorbidade);
         for (Cidadao cidadao : cidadaos) {
- 		   if (cidadao.getEstadoVacinacao()  instanceof NaoHabilitado) {
- 			   cidadao.passarEstagioByComorbidade(comorbidade);   
- 		   } else if (cidadao.getEstadoVacinacao() instanceof Tomou1Dose) {
- 			   LocalDate dataAtual = LocalDate.now();			   
- 			   cidadao.passarEstagio(dataAtual);
- 		   }
+ 		   if (cidadao.passarEstagioByComorbidade(comorbidade)) {
+ 			  cidadaoRepository.save(cidadao);
+ 			  applicationEventPublisher.publishEvent(new EstadoVacinacaoAtualizadoEvent(cidadao));
+ 		   } 
         }
+        
         return cidadaos;
 	}
 
@@ -164,13 +166,12 @@ public class CidadaoServiceImpl implements  CidadaoService{
 		
 		List<Cidadao> cidadaos = cidadaoRepository.findByDataNascimentoLessThanEqual(dataNascimento);
         for (Cidadao cidadao : cidadaos) {
- 		   if (cidadao.getEstadoVacinacao()  instanceof NaoHabilitado) {
- 			   cidadao.passarEstagioByIdade(idade);   
- 		   } else if (cidadao.getEstadoVacinacao() instanceof Tomou1Dose) {
- 			   			   
- 			   cidadao.passarEstagio(dataAtual);
+ 		   if ( cidadao.passarEstagioByIdade(idade)) {
+ 			  cidadaoRepository.save(cidadao);
+ 			  applicationEventPublisher.publishEvent(new EstadoVacinacaoAtualizadoEvent(cidadao));
  		   }
         }
+        
         return cidadaos;
 	}
     
